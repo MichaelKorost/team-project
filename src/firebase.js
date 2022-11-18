@@ -1,5 +1,5 @@
 import {initializeApp} from "firebase/app";
-import {getAuth} from "firebase/auth";
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
 import {getFirestore, collection, doc, setDoc, getDoc} from "firebase/firestore";
 
 // configs from /.env.local
@@ -16,6 +16,35 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 const db = getFirestore(app);
+
+/* authentication functions */
+
+export async function register(email, password) {
+	try {
+		const authData = await createUserWithEmailAndPassword(auth, email, password);
+		return authData;
+	} catch (err) {
+		alert(err.message);
+	}
+}
+
+export async function login(email, password) {
+	try {
+		const authData = await signInWithEmailAndPassword(auth, email, password);
+		return authData;
+	} catch (err) {
+		alert(err.message);
+	}
+}
+
+export async function logout() {
+	try {
+		const authData = await signOut(auth);
+		return authData;
+	} catch (err) {
+		alert(err.message);
+	}
+}
 
 /* database functions */
 
