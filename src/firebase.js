@@ -1,6 +1,6 @@
 import {initializeApp} from "firebase/app";
 import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
-import {getFirestore, collection, doc, setDoc, getDoc} from "firebase/firestore";
+import {getFirestore, collection, doc, setDoc, getDoc, getDocs, query, where} from "firebase/firestore";
 
 // configs from /.env.local
 const firebaseConfig = {
@@ -15,7 +15,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 /* authentication functions */
 
@@ -49,27 +49,80 @@ export async function logout() {
 /* database functions */
 
 // generic set/get functions
-const setCollection = async (collectionName, documentKey, entryData) => {
+// const setCollection = async (collectionName, documentKey, data) => {
+// 	const collectionRef = collection(db, collectionName);
+// 	// setDoc can be awaited but returns undefined anyway
+// 	try {
+// 		await setDoc(doc(collectionRef, documentKey), data);
+// 		return true;
+// 	} catch (err) {
+// 		return false;
+// 	}
+// }
+
+// const getCollection = async (collectionName, documentKey) => {
+// 	const docRef = doc(db, collectionName, documentKey);
+// 	const docSnap = await getDoc(docRef);
+// 	return docSnap.data();
+// }
+
+// export const setProfile = async (uid, data) => {
+// 	console.log("setProfile ::", uid, data);
+// 	return setCollection("profiles", uid, data);
+// }
+
+// export const getProfile = async (uid) => {
+// 	return getCollection("profiles", uid);
+// }
+
+async function setCollection(collectionName, documentKey, data) {
 	const collectionRef = collection(db, collectionName);
 	// setDoc can be awaited but returns undefined anyway
 	try {
-		await setDoc(doc(collectionRef, documentKey), entryData);
+		await setDoc(doc(collectionRef, documentKey), data);
 		return true;
 	} catch (err) {
 		return false;
 	}
 }
 
-const getCollection = async (collectionName, documentKey) => {
+async function getCollection(collectionName, documentKey) {
 	const docRef = doc(db, collectionName, documentKey);
 	const docSnap = await getDoc(docRef);
 	return docSnap.data();
 }
 
-export const setProfile = async (uid, entry) => {
-	return setCollection("profiles", uid, entry);
+async function queryCollection(collectionName, rule) {
+	const ref = collection(db, collectionName);
+	const results = await getDocs(query(ref, rule));
+	const output = [];
+	results.forEach(result => output.push(result.data()));
+	return output;
 }
 
-export const getProfile = async (uid) => {
-	return getCollection("profiles", uid);
+export async function setProfile(user, data) {
+	if (!user) {
+		console.error("setProfile :: setProfile called but user was not defined");
+		return false;
+	}
+	return await setCollection("profiles", user.uid, data);
 }
+
+export async function getProfile(user) {
+	if (!user) {
+		return false;
+	}
+	const data = await getCollection("profiles", user.uid);
+	return data;
+}
+
+export async function queryProfiles(prop, relation, value) {
+	return queryCollection("profiles", where(prop, relation, value));
+}
+
+// async function foo() {
+// 	const ref = collection(db, "profiles");
+// 	const q = query(ref, where("kupat_holim", "==", "Masterschool"));
+// 	const results = await getDocs(q);
+// 	results.forEach(result => console.log(result.data()));
+// }foo();
