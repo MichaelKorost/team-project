@@ -1,0 +1,140 @@
+.homepage-page {
+  display: flex;
+  height: calc(100vh - 64px);
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  background: url("../../images/homepagev2.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #ff4756c9;
+  overflow: hidden;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  width: 50%;
+  min-height: 60%;
+  background-color: rgba(255, 255, 255, 0.39);
+  border-radius: 10px;
+  padding: 20px 10px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+}
+
+.about:hover {
+  transform: scale(1.02);
+}
+
+.about__title {
+  margin: 0;
+  width: 100%;
+  font-family: sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 55px;
+  line-height: 66px;
+  color: white;
+  letter-spacing: -1px;
+  color: #ff4756c9;
+}
+
+.about__desc {
+  margin: 0;
+  font-family: "Source Sans Pro", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 37px;
+  color: white;
+  color: #ff4756c9;
+}
+
+.about__desc-bold {
+  font-weight: bold;
+}
+
+.button-container {
+  width: 100%;
+  max-width: 300px;
+  backdrop-filter: blur(6px);
+}
+
+.donate-button {
+  width: 100%;
+  height: 200px;
+  align-items: center;
+  appearance: none;
+  background-color: #ff4756c9;
+  border-radius: 24px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
+    rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: white;
+  cursor: pointer;
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+.donate-button:hover {
+  background: #fd3a4a;
+  color: white;
+  transform: scale(1.02);
+}
+
+.donate-button:active {
+  box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%),
+    0 8px 12px 6px rgb(60 64 67 / 15%);
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .about__title {
+    font-size: 45px;
+    text-align: center;
+  }
+  .about__desc {
+    font-size: 24px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 599px) {
+  .homepage-page {
+    height: calc(100vh - 48px);
+  }
+}
+
+@media (max-width: 563px) {
+  .homepage-page {
+    height: calc(100vh - 56px);
+  }
+}
+
+@media (max-width: 425px) {
+  .homepage-page {
+    flex-direction: column;
+  }
+
+  .about {
+    min-height: auto;
+    height: fit-content;
+  }
+
+  .button-container {
+    width: 60%;
+  }
+
+  .donate-button {
+    height: 100px;
+    width: 100%;
+    font-size: 26px;
+  }
+}
