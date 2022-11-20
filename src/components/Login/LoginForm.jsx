@@ -68,7 +68,7 @@ function LoginForm() {
   };
 
   return (
-    <>
+    <div className="login-page">
       <div className={registerFormVisible ? "login animate " : "login"}>
         <h1 className="login__title">Blood Buddy </h1>
 
@@ -151,7 +151,7 @@ function LoginForm() {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 
