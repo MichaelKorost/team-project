@@ -21,7 +21,7 @@ function LoginForm() {
   }, [enteredPassword, enteredPasswordConfirmation, enteredEmail]);
 
   const clearInputs = () => {
-    console.log("hello");
+    console.log("clearing inputs");
     setEnteredEmail("");
     setEnteredPassword("");
     setEnteredPasswordConfirmation("");
