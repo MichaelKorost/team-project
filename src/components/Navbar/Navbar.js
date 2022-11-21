@@ -66,7 +66,7 @@ function ResponsiveAppBar() {
 				<List onClick={() => setMenuState(false)}>
 				<ListItem disablePadding sx={{backgroundColor: "#ccc", color: "#666"}}>
 					<ListItemButton>
-					<ListItemText primary={"Cloaaaaaaaase"} />
+					<ListItemText primary={"Close"} />
 					</ListItemButton>
 				</ListItem>
 				{
