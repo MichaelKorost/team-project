@@ -32,15 +32,46 @@ const ProfilePage = () => {
             </Button>
           </div>
           <Button
-            disabled={false}
+            disabled={true}
             variant="contained"
             className="profile__appointment-button"
             style={{ margin: "auto" }}
           >
-            View appointment details
+            View nearest appointment details
           </Button>
         </section>
-        <section className="right-pane"></section>
+        <section className="right-pane">
+          <div className="profile-info">
+            <h1 className="profile-info__fullname">Moti luchim, 39</h1>
+            <div className="profile-info-box">
+              <div className="profile-info-snippet">
+                <label className="profile-info__category">First Name: </label>
+                <p className="profile-info__output">Moti</p>
+              </div>
+              <div className="profile-info-snippet">
+                <label className="profile-info__category">Last Name: </label>
+                <p className="profile-info__output">Luchim</p>
+              </div>
+              <div className="profile-info-snippet">
+                <label className="profile-info__category">Date of birth:</label>
+                <p className="profile-info__output">14/08/1999</p>
+              </div>
+              <div className="profile-info-snippet">
+                <label className="profile-info__category">Phone number: </label>
+                <p className="profile-info__output">(+796) 50-796-2228</p>
+              </div>
+              <div className="profile-info-snippet">
+                <label className="profile-info__category">Blood Type: </label>
+                <p className="profile-info__output">A+</p>
+              </div>
+              <div className="profile-info-snippet">
+                <label className="profile-info__category">Location: </label>
+                <p className="profile-info__output">Tel-aviv, Israel</p>
+              </div>
+            </div>
+            <Button variant="contained">Edit</Button>
+          </div>
+        </section>
       </div>
     </>
   );

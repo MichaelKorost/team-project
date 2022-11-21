@@ -21,20 +21,25 @@ html {
   margin: 0 0 0 10px;
   width: 288px;
   min-width: 240px;
-  height: 80vh;
+  min-height: 60vh;
+  height: auto;
   background-color: white;
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   border-radius: 10px;
 }
 
 .right-pane {
+  display: flex;
+  align-items: center;
   margin: 0 10px 0 0;
-  width: 1008px;
-  height: 80vh;
+  width: 700px;
+  min-height: 60vh;
+  height: auto;
   background-color: white;
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   border-radius: 10px;
 }
+
 .profile-image-container {
   display: flex;
   flex-direction: column;
@@ -56,6 +61,52 @@ html {
 .profile__appointment-button {
   width: 200px;
   height: 100px;
+}
+
+.profile-info {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  margin: 0 0 0 12px;
+}
+
+.profile-info-box {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  width: fit-content;
+  padding: 24px;
+  border-radius: 10px;
+}
+
+.profile-info-snippet {
+  display: flex;
+  margin: 12px;
+}
+
+.profile-info__fullname {
+  width: fit-content;
+  background-color: #ff4756;
+  border-radius: 10px;
+  margin: 12px auto 0;
+  color: white;
+  letter-spacing: 1px;
+  font-size: 34px;
+  padding: 6px;
+}
+
+.profile-info__category {
+  font-size: 20px;
+  min-width: 150px;
+}
+
+.profile-info__output {
+  display: inline;
+  margin: 0;
+  font-size: 20px;
+  color: #ff4756;
+  width: fit-content;
 }
 
 @media (max-width: 768px) {
@@ -94,6 +145,20 @@ html {
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
+  }
+
+  .right-pane {
+    justify-content: center;
+  }
+
+  .profile-info-snippet {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profile-info {
+    margin: 0 0 12px;
+    align-items: center;
   }
 }
 
