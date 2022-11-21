@@ -28,7 +28,13 @@ const ProfilePage = () => {
             >
               <CameraAltIcon />
               Upload
-              <input hidden accept="image/*" multiple type="file" />
+              <input
+                hidden
+                accept="image/*"
+                multiple
+                type="file"
+                onChange={(e) => setFile(e.target.files[0])}
+              />
             </Button>
           </div>
           <Button
