@@ -17,6 +17,7 @@ html {
 .left-pane {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin: 0 0 0 10px;
   width: 288px;
   min-width: 240px;
@@ -34,6 +35,28 @@ html {
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   border-radius: 10px;
 }
+.profile-image-container {
+  display: flex;
+  flex-direction: column;
+  margin: 12px 0 0;
+  width: 100%;
+  max-width: 200px;
+  gap: 12px;
+}
+.profile__image {
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.profile__image-button {
+  display: flex;
+  gap: 5px;
+}
+
+.profile__appointment-button {
+  width: 200px;
+  height: 100px;
+}
 
 @media (max-width: 768px) {
   .profile-page-page {
@@ -48,6 +71,7 @@ html {
     width: 95%;
     min-height: 240px;
     max-height: 240px;
+    gap: 12px;
   }
 
   .right-pane {
@@ -57,10 +81,35 @@ html {
     min-height: 400px;
     height: auto;
   }
+
+  .profile-image-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 0 12px;
+    width: 100%;
+    max-width: 150px;
+    gap: 12px;
+  }
+  .profile__image {
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 }
 
 @media (max-width: 599px) {
   .profile-page-page {
     height: auto;
+  }
+}
+
+@media (max-width: 425px) {
+  .profile__appointment-button {
+    font-size: 14px;
+    width: 120px;
+    height: 200px;
+  }
+  .left-pane {
+    gap: 6px;
   }
 }
