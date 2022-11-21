@@ -19,7 +19,7 @@ function Navbar() {
   const [menuState, setMenuState] = useState(false);
   return (
     <Router>
-      <AppBar position="static" style={{ background: "#ff4756" }}>
+      <AppBar position="static" className="navbar">
         <Toolbar>
           <IconButton
             size="large"
