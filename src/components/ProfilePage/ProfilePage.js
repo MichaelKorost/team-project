@@ -31,7 +31,6 @@ const ProfilePage = () => {
               <input
                 hidden
                 accept="image/*"
-                multiple
                 type="file"
                 onChange={(e) => setFile(e.target.files[0])}
               />
@@ -73,6 +72,10 @@ const ProfilePage = () => {
               <div className="profile-info-snippet">
                 <label className="profile-info__category">Location: </label>
                 <p className="profile-info__output">Tel-aviv, Israel</p>
+              </div>
+              <div className="profile-info-snippet">
+                <label className="profile-info__category">HMO:</label>
+                <p className="profile-info__output">Leumit</p>
               </div>
             </div>
             <Button variant="contained">Edit</Button>
