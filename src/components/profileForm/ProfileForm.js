@@ -80,6 +80,11 @@ export default function ProfileForm() {
     return SetLastNameValid(true);
   };
 
+  //---------todo---------
+  //1. checking it with firestore
+  // style, look on the web or do it with michael
+  // taking everything into a modal which opens with the form
+
   return (
     // <FormControl>
     // onSubmit={(e) => handleSubmit(e)}
