@@ -6,14 +6,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Button } from '@mui/material';
-import FormControl, { useFormControl } from '@mui/material/FormControl';
+import { Button, FormHelperText, InputLabel } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
 import {
   collection,
   db,
   doc,
   getDocs,
-  setDoc,
   updateDoc,
 } from '../../firebase/firebaseConfig';
 
@@ -29,6 +28,10 @@ export default function ProfileForm() {
   );
   const [lastNameValid, SetLastNameValid] = useState(false);
   const [user, setUser] = useState({});
+  //  ----------date states
+  const [isMinAge, setIsMinAge] = useState(false);
+  const [dateValue, setDateValue] = useState(new Date());
+  const [open, setOpen] = useState(false);
   // const [users, setUsers] = useState([]);
 
   // ----------end states
@@ -37,6 +40,8 @@ export default function ProfileForm() {
   const handleSubmit = (e) => {
     console.log(userProfile);
     updateProfile();
+    // no need to clear after submitting,
+    //showing the current profile
   };
 
   const firstNameInputHandle = (e) => {
@@ -49,9 +54,18 @@ export default function ProfileForm() {
     setUserProfile({ ...userProfile, lastName: e.target.value.toLowerCase() });
     console.log(userProfile);
   };
-  const dateInputHandle = (date) => {
-    setUserProfile({ ...userProfile, date: date.format('YYYY-MM-DD') });
-    console.log(userProfile);
+  const dateInputHandle = (date, e) => {
+    if (!date) return;
+    const minAge = Date.parse(new Date('January 1, 2004'));
+    const pickedDate = Date.parse(date.format('YYYY-MM-DD'));
+    setDateValue(date);
+    if (pickedDate < minAge) {
+      setUserProfile({ ...userProfile, age: date.format('YYYY-MM-DD') });
+      console.log(userProfile);
+      setIsMinAge(true);
+      return;
+    }
+    setIsMinAge(false);
   };
   const selectInputHandle = (e) => {
     setUserProfile({ ...userProfile, bloodType: e.target.value });
@@ -125,23 +139,20 @@ export default function ProfileForm() {
   // ---------end firestore shenanigans
 
   //---------todo---------
-  //1. checking it with firestore  also works with updating specific inputs!
+  //1. checking it with firestore ----> works.  also works with updating specific inputs!
   // style, look on the web or do it with michael
   // taking everything into a modal which opens with the form
+  // why are the mui date and select so slow to open???
 
   return (
-    // <FormControl>
-    // onSubmit={(e) => handleSubmit(e)}
     <form className='profile-form'>
       <TextField
-        // id='outlined-required'
         onChange={(e) => firstNameInputHandle(e)}
         label='First Name'
         helperText={firstNameErrMsg ? firstNameErrMsg : ''}
         error={!FirstNameValid}
       />
       <TextField
-        // id='outlined-required'
         onChange={(e) => lastNameInputHandle(e)}
         label='Last Name'
         helperText={lastNameErrMsg ? lastNameErrMsg : ''}
@@ -149,48 +160,72 @@ export default function ProfileForm() {
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DesktopDatePicker
-          label={userProfile.date ? 'Date Chosen' : 'Choose A Date'}
+          label={userProfile.age ? 'Date Chosen' : 'Birth Year'}
           inputFormat='MM/DD/YYYY'
-          value={userProfile.date ? userProfile.date : ''}
+          value={dateValue}
           onChange={(date) => dateInputHandle(date)}
-          renderInput={(params) => <TextField {...params} />}
+          onOpen={() => setOpen(true)}
+          onClose={() => setOpen(false)}
+          open={open}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              onFocus={(e) => {
+                e.target.blur();
+                return setOpen(true);
+              }}
+              error={!isMinAge}
+              helperText={
+                !isMinAge ? 'Minimun Age Should Be 18 Years Old' : 'dd/mm/yyyy'
+              }
+            />
+          )}
         />
       </LocalizationProvider>
-      <Select
-        required
-        labelId='demo-simple-select-label'
-        id='demo-simple-select'
-        value={userProfile.bloodType ? userProfile.bloodType : ''}
-        label='Blood Type'
-        error={!userProfile.bloodType}
-        onChange={(e) => selectInputHandle(e)}>
-        <MenuItem value={'A-'}>A-</MenuItem>
-        <MenuItem value={'B-'}>B-</MenuItem>
-        <MenuItem value={'AB'}>AB</MenuItem>
-      </Select>
 
+      <input type='date' min={'2004-01-01'} />
+      {/* the select is at diff height because the others have
+       helper texet tried adding to it also
+        using formControl but it didn't help */}
+      <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel>Blood Type</InputLabel>
+        <Select
+          value={userProfile.bloodType ? userProfile.bloodType : ''}
+          label='Blood Type'
+          error={!userProfile.bloodType}
+          onChange={(e) => selectInputHandle(e)}>
+          <MenuItem value={'A+'}>A+</MenuItem>
+          <MenuItem value={'A-'}>A-</MenuItem>
+          <MenuItem value={'B+'}>B+</MenuItem>
+          <MenuItem value={'B-'}>B-</MenuItem>
+          <MenuItem value={'AB+'}>AB+</MenuItem>
+          <MenuItem value={'AB-'}>AB-</MenuItem>
+          <MenuItem value={'O+'}>O+</MenuItem>
+          <MenuItem value={'O-'}>O-</MenuItem>
+        </Select>
+        <FormHelperText> </FormHelperText>
+      </FormControl>
+      <select name='blood' id='blood'>
+        <option value='1'>1</option>
+        <option value='2'>2</option>
+        <option value='3'>3</option>
+      </select>
       <Button
         variant='contained'
-        // type='submit'
         onClick={handleSubmit}
         disabled={
           !(
             userProfile.firstName &&
             userProfile.lastName &&
-            userProfile.date &&
+            userProfile.age &&
             userProfile.bloodType &&
             !firstNameErrMsg &&
-            !lastNameErrMsg
+            !lastNameErrMsg &&
+            isMinAge
           )
         }>
         submit
       </Button>
-
-      {/* <Button
-        onClick={() => {
-          updateUser();
-        }}></Button> */}
     </form>
-    // </FormControl>
   );
 }
