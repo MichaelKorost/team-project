@@ -13,10 +13,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin: 0 0 0 10px;
-  width: 288px;
-  min-width: 240px;
-  min-height: 60vh;
+  width: 400px;
+  min-height: 75vh;
   height: auto;
   background-color: white;
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
@@ -28,9 +28,20 @@
   align-items: center;
   margin: 0 10px 0 0;
   width: 700px;
-  min-height: 60vh;
+  min-height: 75vh;
   height: auto;
   background-color: white;
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   border-radius: 10px;
+}
+
+.donate__title {
+  margin: 15px 0 15px;
+  font-size: 20px;
+  font-weight: 200;
+}
+
+.donate__button {
+  margin: 15px 0 !important;
+  padding: 15px !important;
 }
