@@ -4,6 +4,7 @@ import Calendar from "../Calendar/Calender";
 import { useEffect, useState } from "react";
 import TimeInput from "../TimeInput/TimeInput";
 import { Button } from "@mui/material";
+import AppointmentModal from "../Modals/AppointmentModal/AppointmentModal";
 
 const DonatePage = () => {
   const [selectedDate, SetSelectedDate] = useState("");
@@ -11,6 +12,17 @@ const DonatePage = () => {
   const [time, setTime] = useState(null);
   const [timeString, setTimeString] = useState("");
   const [isDateValid, setIsDateValid] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const modalAcceptHandler = () => {};
 
   const calendarSelectedDate = (date) => {
     SetSelectedDate(date);
@@ -20,7 +32,8 @@ const DonatePage = () => {
     const day = date?.toDateString().slice(0, 3) || "";
     const dayNum = date?.toLocaleString("en-US", { day: "2-digit" }) || "";
     setDateString(
-      `an appointment was set on ${day}, ${dayNum}/${month}/${year}`
+      `An appointment was set on ${day}, ${dayNum}/${month}/${year}.
+      Confirm?`
     );
   };
 
@@ -46,11 +59,21 @@ const DonatePage = () => {
             disabled={!isDateValid}
             variant="text"
             className="donate__button"
+            onClick={openModal}
           >
             Set appointment
           </Button>
         </section>
         <section className="donate-right-pane"></section>
+        {isOpen && (
+          <AppointmentModal
+            isOpen={isOpen}
+            onOpenModal={openModal}
+            onCloseModal={closeModal}
+            onAcceptModal={modalAcceptHandler}
+            appointedDate={dateString}
+          />
+        )}
       </div>
     </>
   );

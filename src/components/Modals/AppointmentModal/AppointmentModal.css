@@ -1,0 +1,6 @@
+.modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  margin: 20px 0 0;
+}

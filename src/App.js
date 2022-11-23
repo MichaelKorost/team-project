@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar/Navbar";
 import HomePage from "./components/HomePage/HomePage";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import DonatePage from "./components/DonatePage/DonatePage";
+import AppointmentModal from "./components/Modals/AppointmentModal/AppointmentModal";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       {/* <HomePage /> */}
       {/* <ProfilePage /> */}
       <DonatePage />
+      {/* <AppointmentModal /> */}
     </div>
   );
 }
