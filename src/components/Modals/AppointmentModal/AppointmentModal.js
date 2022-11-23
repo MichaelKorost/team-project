@@ -22,7 +22,6 @@ export default function AppointmentModal({
   };
 
   const modalAccept = () => {
-    onCloseModal();
     onAcceptModal();
   };
 
