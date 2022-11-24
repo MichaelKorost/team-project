@@ -6,12 +6,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { AddCardOutlined, SubjectOutlined } from "@mui/icons-material";
 import { Box } from "@mui/material";
-
-
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 function DashboardSidebar({sx, anchor}) {
 
-	// const drawerDimensions = {width: {xs: "100%", sm: 300}, position: {xs: "initial", sm: "fixed"}, height: {sm: "100%"}};
 	const drawerDimensions = {width: {sm: "100%", md: 250}, height: {md: "100vh"}};
 
 	const navigate = useNavigate();
@@ -21,12 +20,12 @@ function DashboardSidebar({sx, anchor}) {
 		{
 			text: "Admin Dashboard",
 			to: "/admin",
-			icon: SubjectOutlined
+			icon: DashboardIcon
 		},
 		{
 			text: "Manage Users",
 			to: "/admin/users",
-			icon: AddCardOutlined
+			icon: SupervisedUserCircleIcon
 		}
 	];
 
@@ -45,10 +44,10 @@ function DashboardSidebar({sx, anchor}) {
 				boxSizing: 'border-box'
 			}
 		}}>
-			<List>
+			<List sx={{p: 0}}>
 				{menuItems.map(({text, to, icon: Icon}, i) => (
-					<ListItem button className={location.pathname === to ? "active" : ""} onClick={() => to && navigate(to)} key={i}>
-						<ListItemIcon><Icon color="secondary" /></ListItemIcon>
+					<ListItem button sx={{backgroundImage: location.pathname === to ? {xs: "linear-gradient(to right, #ff475688 10px, #ff475600 10px), linear-gradient(to left, #ff475622 30%, #ff475600 80%)", md: "linear-gradient(to right, #ff475688 10px, #ff475600 10px)"} : ""}} onClick={() => to && navigate(to)} key={i}>
+						<ListItemIcon><Icon color="primary" /></ListItemIcon>
 						<ListItemText primary={text} />
 					</ListItem>
 				))}
