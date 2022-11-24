@@ -1,10 +1,12 @@
-import {useState, useRef} from "react";
+import {useState, useRef, useContext} from "react";
 import "./LoginForm.css";
+import {AuthContext} from "../AuthContext";
 
 function LoginForm() {
   const [registerFormVisible, setRegisterFormVisible]= useState(false);
   const password = useRef();
   const [email, setEmail] = useState("");
+  const {register, login, logout, user} = useContext(AuthContext);
   const submitHandler = e => {
     e.preventDefault();
     console.log({
@@ -12,6 +14,7 @@ function LoginForm() {
       password: password.current.value,
       doesCreateAccount: registerFormVisible
     });
+    (registerFormVisible ? register : login)(email, password.current.value)
   }
   const switchFormHandler = e => {
     e.preventDefault();
@@ -19,6 +22,8 @@ function LoginForm() {
   }
   return (
     <div className="center">
+      <span onClick={logout}>logout</span>
+      {user && <pre>{user.email}</pre>}
       <h1>{registerFormVisible ? "Regsiter" : "Login"}</h1>
       <form onSubmit={submitHandler}>
         <div className="txt_field">

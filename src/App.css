@@ -1,5 +1,9 @@
 @import "./fonts/fonts.css";
 
+html {
+  background-color: #f1f2f6;
+}
+
 .App {
   font-family: "Roboto", sans-serif;
 }

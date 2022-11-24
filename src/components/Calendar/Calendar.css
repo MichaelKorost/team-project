@@ -1,0 +1,20 @@
+/* selected date */
+.css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  background-color: #ff4756;
+  color: white;
+}
+/* select date text */
+.css-1hbyad5-MuiTypography-root {
+  display: none;
+}
+
+.css-144dnr3-MuiBadge-badge {
+  color: #2ed573;
+}
+
+/* default calendar buttons */
+.MuiDialogActions-root {
+  display: none !important;
+}
