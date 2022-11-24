@@ -1,4 +1,6 @@
-import LoginForm from "./components/LoginForm";
+import { FormatTextdirectionLToRSharp } from '@mui/icons-material';
+import { getDialogUtilityClass } from '@mui/material';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import {getProfile, setProfile, queryProfiles} from "./firebase";
@@ -7,6 +9,8 @@ import {AuthContext} from "./AuthContext";
 import {collection, doc, setDoc, getDoc} from "firebase/firestore"; 
 import {db} from "./firebase";
 
+import ProfileForm from './components/profileForm/ProfileForm';
+// import LoginForm from './components/LoginForm';
 
 function App() {
 
@@ -37,9 +41,10 @@ function App() {
   
 
   return (
-    <div className="App">
+    <div className='App'>
       <Navbar />
-      <LoginForm />
+      {/* <LoginForm /> */}
+      <ProfileForm />
       
       {/* <button onClick={e => getProfile(user).then(data => {console.warn(data);})}>click to get</button>
       <button onClick={e => setProfile(user, {fiz: "buzz"}).then(data => {console.warn("getProfile response:", data);})}>click to set</button> */}
