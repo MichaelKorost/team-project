@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { ThemeProvider, createTheme } from "@mui/material";
-import { AuthProvider } from './AuthContext';
+import { AuthProvider } from "./AuthContext";
 
 const theme = createTheme({
   palette: {

@@ -3,13 +3,22 @@ import { Button, Typography } from "@mui/material";
 import Navbar from "../Navbar/Navbar";
 import { useState } from "react";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-
+import ProfileEditModal from "../Modals/ProfileEditModal/ProfileEditModal";
 // TODO: add isConfirmed boolean to profile
 // TODO: implement appointment details btn
 // TODO: change detail text depending if confirmed or not
 
 const ProfilePage = () => {
   const [file, setFile] = useState("");
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
+  const openEditModal = () => {
+    setIsEditOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditOpen(false);
+  };
 
   return (
     <>
@@ -52,7 +61,7 @@ const ProfilePage = () => {
         </section>
         <section className="right-pane">
           <div className="profile-info">
-            <h1 className="profile-info__fullname">Moti luchim, 39</h1>
+            {/* <h1 className="profile-info__fullname">Moti luchim, 39</h1> */}
             <div className="profile-info-box">
               <div className="profile-info-snippet">
                 <label className="profile-info__category">First Name: </label>
@@ -83,10 +92,21 @@ const ProfilePage = () => {
                 <p className="profile-info__output">Leumit</p>
               </div>
             </div>
-            <Button variant="contained">Edit</Button>
+            <Button
+              variant="contained"
+              onClick={openEditModal}
+              className="profile__edit-btn"
+            >
+              Edit
+            </Button>
           </div>
         </section>
       </div>
+      <ProfileEditModal
+        onOpenModal={openEditModal}
+        onCloseModal={closeEditModal}
+        isOpen={isEditOpen}
+      />
     </>
   );
 };

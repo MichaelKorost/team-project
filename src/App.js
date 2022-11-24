@@ -7,17 +7,18 @@ import DonatePage from "./components/DonatePage/DonatePage";
 import AppointmentModal from "./components/Modals/AppointmentModal/AppointmentModal";
 import DonateDetailsModal from "./components/Modals/DonateDetailsModal/DonateDetailsModal";
 import ProfileForm from "./components/profileForm/ProfileForm";
-
+import ProfileEditModal from "./components/Modals/ProfileEditModal/ProfileEditModal";
 function App() {
   return (
     <div className="App">
       {/* <Navbar /> */}
       {/* <LoginForm /> */}
       {/* <HomePage /> */}
-      {/* <ProfilePage /> */}
-      <DonatePage />
+      <ProfilePage />
+      {/* <DonatePage /> */}
       {/* <AppointmentModal /> */}
       {/* <ProfileForm /> */}
+      {/* <ProfileEditModal /> */}
     </div>
   );
 }

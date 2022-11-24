@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import './profileForm.css';
-import TextField from '@mui/material/TextField';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { Button, FormHelperText, InputLabel } from '@mui/material';
-import FormControl from '@mui/material/FormControl';
+import React, { useEffect, useState } from "react";
+import "./profileForm.css";
+import TextField from "@mui/material/TextField";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import { Button, FormHelperText, InputLabel } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
 import {
   collection,
   db,
   doc,
   getDocs,
   updateDoc,
-} from '../../firebase/firebaseConfig';
+} from "../../firebase/firebaseConfig";
 
-export default function ProfileForm() {
+export default function ProfileForm({ onCloseModal }) {
   // ----------start states
   const [userProfile, setUserProfile] = useState({});
   const [firstNameErrMsg, setFirstNameErrMsg] = useState(
-    'First name should be more than 1 character'
+    "First name should be more than 1 character"
   );
   const [FirstNameValid, SetFirstNameValid] = useState(false);
   const [lastNameErrMsg, setLastNameErrMsg] = useState(
-    'Last name should be more than 1 character'
+    "Last name should be more than 1 character"
   );
   const [lastNameValid, SetLastNameValid] = useState(false);
   const [user, setUser] = useState({});
@@ -40,8 +40,13 @@ export default function ProfileForm() {
   const handleSubmit = (e) => {
     console.log(userProfile);
     updateProfile();
+    cancelHandler();
     // no need to clear after submitting,
     //showing the current profile
+  };
+
+  const cancelHandler = () => {
+    onCloseModal();
   };
 
   const firstNameInputHandle = (e) => {
@@ -56,11 +61,11 @@ export default function ProfileForm() {
   };
   const dateInputHandle = (date, e) => {
     if (!date) return;
-    const minAge = Date.parse(new Date('January 1, 2004'));
-    const pickedDate = Date.parse(date.format('YYYY-MM-DD'));
+    const minAge = Date.parse(new Date("January 1, 2004"));
+    const pickedDate = Date.parse(date.format("YYYY-MM-DD"));
     setDateValue(date);
     if (pickedDate < minAge) {
-      setUserProfile({ ...userProfile, age: date.format('YYYY-MM-DD') });
+      setUserProfile({ ...userProfile, age: date.format("YYYY-MM-DD") });
       console.log(userProfile);
       setIsMinAge(true);
       return;
@@ -74,37 +79,37 @@ export default function ProfileForm() {
 
   const isFirstNameValid = (str) => {
     if (!str) {
-      setFirstNameErrMsg('First name should be more than 1 character');
+      setFirstNameErrMsg("First name should be more than 1 character");
       return SetFirstNameValid(false);
     }
-    if (String(str).includes(' ')) {
-      setFirstNameErrMsg('First name should not include spaces');
+    if (String(str).includes(" ")) {
+      setFirstNameErrMsg("First name should not include spaces");
       return SetFirstNameValid(false);
     }
     if (!/^[a-zA-Z]+$/.test(str)) {
-      setFirstNameErrMsg('First name should not include numbers and symbols');
+      setFirstNameErrMsg("First name should not include numbers and symbols");
       return SetFirstNameValid(false);
     }
-    setFirstNameErrMsg('');
+    setFirstNameErrMsg("");
     return SetFirstNameValid(true);
   };
 
   const isLastNameValid = (str) => {
     if (!str) {
-      setLastNameErrMsg('Last name should be more than 1 character');
+      setLastNameErrMsg("Last name should be more than 1 character");
       return SetLastNameValid(false);
     }
-    if (String(str).includes(' ')) {
-      setLastNameErrMsg('Last name should not include spaces');
+    if (String(str).includes(" ")) {
+      setLastNameErrMsg("Last name should not include spaces");
       return SetLastNameValid(false);
     }
     if (!/^[a-zA-Z]+$/.test(str)) {
       setLastNameErrMsg(
-        'Last name should not include numbers and symbols or spaces'
+        "Last name should not include numbers and symbols or spaces"
       );
       return SetLastNameValid(false);
     }
-    setLastNameErrMsg('');
+    setLastNameErrMsg("");
     return SetLastNameValid(true);
   };
 
@@ -112,7 +117,7 @@ export default function ProfileForm() {
 
   // ---------start firestore shenanigans
 
-  const usersCollectionRef = collection(db, 'users');
+  const usersCollectionRef = collection(db, "users");
 
   useEffect(() => {
     const getUsers = async () => {
@@ -129,7 +134,7 @@ export default function ProfileForm() {
 
   const updateProfile = async () => {
     if (user) {
-      const docRef = doc(db, 'users', user[0].id);
+      const docRef = doc(db, "users", user[0].id);
       await updateDoc(docRef, { ...userProfile });
       console.log(docRef);
     }
@@ -145,23 +150,23 @@ export default function ProfileForm() {
   // taking everything into a modal which opens with the form
 
   return (
-    <form className='profile-form'>
+    <form className="profile-form">
       <TextField
         onChange={(e) => firstNameInputHandle(e)}
-        label='First Name'
-        helperText={firstNameErrMsg ? firstNameErrMsg : ''}
+        label="First Name"
+        helperText={firstNameErrMsg ? firstNameErrMsg : ""}
         error={!FirstNameValid}
       />
       <TextField
         onChange={(e) => lastNameInputHandle(e)}
-        label='Last Name'
-        helperText={lastNameErrMsg ? lastNameErrMsg : ''}
+        label="Last Name"
+        helperText={lastNameErrMsg ? lastNameErrMsg : ""}
         error={!lastNameValid}
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DesktopDatePicker
-          label={userProfile.age ? 'Date Chosen' : 'Birth Year'}
-          inputFormat='MM/DD/YYYY'
+          label={userProfile.age ? "I was born at" : "Date of birth"}
+          inputFormat="MM/DD/YYYY"
           value={dateValue}
           onChange={(date) => dateInputHandle(date)}
           onOpen={() => setOpen(true)}
@@ -176,57 +181,58 @@ export default function ProfileForm() {
               }}
               error={!isMinAge}
               helperText={
-                !isMinAge ? 'Minimun Age Should Be 18 Years Old' : 'dd/mm/yyyy'
+                !isMinAge ? "Minimun Age Should Be 18 Years Old" : "dd/mm/yyyy"
               }
             />
           )}
         />
       </LocalizationProvider>
-      {/* html example to check for lag */}
       {/* <input type='date' min={'2004-01-01'} /> */}
       {/* the select is at diff height because the others have
        helper texet tried adding to it also
         using formControl but it didn't help */}
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
+      <FormControl sx={{ minWidth: 120 }}>
         <InputLabel>Blood Type</InputLabel>
         <Select
-          value={userProfile.bloodType ? userProfile.bloodType : ''}
-          label='Blood Type'
+          value={userProfile.bloodType ? userProfile.bloodType : ""}
+          label="Blood Type"
           error={!userProfile.bloodType}
-          onChange={(e) => selectInputHandle(e)}>
-          <MenuItem value={'A+'}>A+</MenuItem>
-          <MenuItem value={'A-'}>A-</MenuItem>
-          <MenuItem value={'B+'}>B+</MenuItem>
-          <MenuItem value={'B-'}>B-</MenuItem>
-          <MenuItem value={'AB+'}>AB+</MenuItem>
-          <MenuItem value={'AB-'}>AB-</MenuItem>
-          <MenuItem value={'O+'}>O+</MenuItem>
-          <MenuItem value={'O-'}>O-</MenuItem>
+          onChange={(e) => selectInputHandle(e)}
+        >
+          <MenuItem value={"A+"}>A+</MenuItem>
+          <MenuItem value={"A-"}>A-</MenuItem>
+          <MenuItem value={"B+"}>B+</MenuItem>
+          <MenuItem value={"B-"}>B-</MenuItem>
+          <MenuItem value={"AB+"}>AB+</MenuItem>
+          <MenuItem value={"AB-"}>AB-</MenuItem>
+          <MenuItem value={"O+"}>O+</MenuItem>
+          <MenuItem value={"O-"}>O-</MenuItem>
         </Select>
         <FormHelperText> </FormHelperText>
       </FormControl>
-      {/* html example to check for lag */}
-      {/* <select name='blood' id='blood'>
-        <option value='1'>1</option>
-        <option value='2'>2</option>
-        <option value='3'>3</option>
-      </select> */}
-      <Button
-        variant='contained'
-        onClick={handleSubmit}
-        disabled={
-          !(
-            userProfile.firstName &&
-            userProfile.lastName &&
-            userProfile.age &&
-            userProfile.bloodType &&
-            !firstNameErrMsg &&
-            !lastNameErrMsg &&
-            isMinAge
-          )
-        }>
-        submit
-      </Button>
+      <div className="edit__actions">
+        <Button
+          className="edit__button"
+          variant="text"
+          onClick={handleSubmit}
+          disabled={
+            !(
+              userProfile.firstName &&
+              userProfile.lastName &&
+              userProfile.age &&
+              userProfile.bloodType &&
+              !firstNameErrMsg &&
+              !lastNameErrMsg &&
+              isMinAge
+            )
+          }
+        >
+          save
+        </Button>
+        <Button className="edit__button" variant="text" onClick={cancelHandler}>
+          Cancel
+        </Button>
+      </div>
     </form>
   );
 }
