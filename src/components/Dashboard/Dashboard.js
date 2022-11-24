@@ -3,11 +3,11 @@ import DashboardSidebar from "../DashboardSidebar/DashboardSidebar";
 
 function Dashboard() {
 	return (
-		<Box sx={{ display: 'flex', flexDirection: {xs: "column", sm: "row"}}}>
-			<Box sx={{display: {xs: "none", sm: "contents"}}}>
+		<Box sx={{ display: 'flex', flexDirection: {xs: "column", md: "row"}}}>
+			<Box sx={{display: {xs: "none", md: "contents"}}}>
 				<DashboardSidebar anchor={"left"} />
 			</Box>
-			<Box sx={{display: {xs: "contents", sm: "none"}}}>
+			<Box sx={{display: {xs: "contents", md: "none"}}}>
 				<DashboardSidebar anchor={"top"} />
 			</Box>
 			<div>

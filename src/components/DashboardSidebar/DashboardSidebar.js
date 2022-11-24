@@ -5,12 +5,14 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { AddCardOutlined, SubjectOutlined } from "@mui/icons-material";
+import { Box } from "@mui/material";
 
 
 
 function DashboardSidebar({sx, anchor}) {
 
-	const drawerDimensions = {width: {xs: "100%", sm: 300}, position: {xs: "initial", sm: "fixed"}, height: {sm: "100%"}};
+	// const drawerDimensions = {width: {xs: "100%", sm: 300}, position: {xs: "initial", sm: "fixed"}, height: {sm: "100%"}};
+	const drawerDimensions = {width: {sm: "100%", md: 250}, height: {md: "100vh"}};
 
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -29,7 +31,12 @@ function DashboardSidebar({sx, anchor}) {
 	];
 
 	return (
-		<Drawer variant="permanent" anchor={anchor} sx={{
+		<Box variant="permanent" anchor={anchor} sx={{
+			backgroundColor: "background.default",
+			borderStyle: "solid",
+			borderWidth: {xs: "0 0 1px 0", md: "0 1px 0 0"},
+			borderColor: "#ccc",
+			height: "100%",
 			...sx,
 			...drawerDimensions,
 			flexShrink: 0,
@@ -46,7 +53,7 @@ function DashboardSidebar({sx, anchor}) {
 					</ListItem>
 				))}
 			</List>
-		</Drawer>
+		</Box>
 	);
 }
 
