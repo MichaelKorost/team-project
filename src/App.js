@@ -13,8 +13,8 @@ function App() {
       {/* <Navbar /> */}
       {/* <LoginForm /> */}
       {/* <HomePage /> */}
-      {/* <ProfilePage /> */}
-      <DonatePage />
+      <ProfilePage />
+      {/* <DonatePage /> */}
       {/* <AppointmentModal /> */}
       {/* <DonateDetailsModal /> */}
     </div>

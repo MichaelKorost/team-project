@@ -4,8 +4,13 @@ import Navbar from "../Navbar/Navbar";
 import { useState } from "react";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 
+// TODO: add isConfirmed boolean to profile
+// TODO: implement appointment details btn
+// TODO: change detail text depending if confirmed or not
+
 const ProfilePage = () => {
   const [file, setFile] = useState("");
+
   return (
     <>
       <Navbar />
@@ -37,7 +42,7 @@ const ProfilePage = () => {
             </Button>
           </div>
           <Button
-            disabled={true}
+            disabled={false}
             variant="contained"
             className="profile__appointment-button"
             style={{ margin: "auto" }}
