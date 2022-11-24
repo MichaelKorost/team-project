@@ -1,0 +1,67 @@
+.modal-details__actions {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+/*  modal  */
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 100vh !important;
+  max-width: 100vw !important;
+  margin: 0 !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+}
+
+.modal-details__main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  min-width: 90vw;
+  border-radius: 3px;
+  height: 600px;
+}
+
+.details-main__info-box {
+  display: flex;
+  margin: 5px 0;
+}
+
+.details-main__question {
+  width: 80px;
+  margin: 0;
+  font-size: 24px;
+}
+
+.details-main__answer {
+  margin: 0;
+  font-size: 24px;
+  background-color: #ff4756;
+  padding: 5px 10px;
+  border-radius: 15px;
+}
+
+.details__map-container {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  height: 90%;
+}
+
+.temp-map {
+  width: 100%;
+  height: 90%;
+  background-color: #ccc;
+}
+
+@media (max-width: 425px) {
+  .details-main__info-box {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import TimeInput from "../TimeInput/TimeInput";
 import { Button } from "@mui/material";
 import AppointmentModal from "../Modals/AppointmentModal/AppointmentModal";
+import DonateDetailsModal from "../Modals/DonateDetailsModal/DonateDetailsModal";
 
 // TODO: local storage date and time, so refresh wont reload appointment
 // TODO: appnt saved into db or localStorage and is init val to date string
@@ -20,7 +21,17 @@ const DonatePage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [confirmedDate, setConfirmedDate] = useState("");
+  // view appointment details button
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
+  const closeDetailsModal = () => {
+    setIsDetailsOpen(false);
+  };
+
+  const openDetailsModal = () => {
+    setIsDetailsOpen(true);
+  };
+  //   end if appointment details
   const openModal = () => {
     setIsOpen(true);
   };
@@ -85,7 +96,11 @@ const DonatePage = () => {
           ) : (
             <div className="donate__confirm-message">
               <h1>An Appointment was set successfully!</h1>
-              <Button variant="contained" className="donate__confirm-button">
+              <Button
+                variant="contained"
+                className="donate__confirm-button"
+                onClick={openDetailsModal}
+              >
                 view Appointment Details
               </Button>
             </div>
@@ -115,6 +130,15 @@ const DonatePage = () => {
             onCloseModal={closeModal}
             onAcceptModal={modalAcceptHandler}
             appointedDate={dateString}
+          />
+        )}
+        {isDetailsOpen && (
+          <DonateDetailsModal
+            isOpen={isDetailsOpen}
+            onCloseModal={closeDetailsModal}
+            confirmedDate={confirmedDate}
+            timeString={timeString}
+            onOpenModal={openDetailsModal}
           />
         )}
       </div>
