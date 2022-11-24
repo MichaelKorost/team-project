@@ -6,6 +6,7 @@ import ProfilePage from "./components/ProfilePage/ProfilePage";
 import DonatePage from "./components/DonatePage/DonatePage";
 import AppointmentModal from "./components/Modals/AppointmentModal/AppointmentModal";
 import DonateDetailsModal from "./components/Modals/DonateDetailsModal/DonateDetailsModal";
+import ProfileForm from "./components/profileForm/ProfileForm";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       {/* <ProfilePage /> */}
       <DonatePage />
       {/* <AppointmentModal /> */}
+      {/* <ProfileForm /> */}
     </div>
   );
 }
