@@ -141,8 +141,8 @@ export default function ProfileForm() {
   //---------todo---------
   //1. checking it with firestore ----> works.  also works with updating specific inputs!
   // style, look on the web or do it with michael
+  // having it update the profile of the current user and not just the first doc in firestore...
   // taking everything into a modal which opens with the form
-  // why are the mui date and select so slow to open???
 
   return (
     <form className='profile-form'>
@@ -182,8 +182,8 @@ export default function ProfileForm() {
           )}
         />
       </LocalizationProvider>
-
-      <input type='date' min={'2004-01-01'} />
+      {/* html example to check for lag */}
+      {/* <input type='date' min={'2004-01-01'} /> */}
       {/* the select is at diff height because the others have
        helper texet tried adding to it also
         using formControl but it didn't help */}
@@ -205,11 +205,12 @@ export default function ProfileForm() {
         </Select>
         <FormHelperText> </FormHelperText>
       </FormControl>
-      <select name='blood' id='blood'>
+      {/* html example to check for lag */}
+      {/* <select name='blood' id='blood'>
         <option value='1'>1</option>
         <option value='2'>2</option>
         <option value='3'>3</option>
-      </select>
+      </select> */}
       <Button
         variant='contained'
         onClick={handleSubmit}

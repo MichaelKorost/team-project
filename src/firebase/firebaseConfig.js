@@ -33,7 +33,7 @@ const app = initializeApp(firebaseConfig);
 // init auth
 
 const auth = getAuth(app);
-const db = getFirestore(app); //if app not as parameter it crashes not finding firebase...
+const db = getFirestore(); //if doesnt work add\remove app not as parameter it crashes not finding firebase...
 
 export default app;
 
