@@ -47,23 +47,23 @@ function LoginForm() {
 
   const loginSubmitHandler = (e) => {
     e.preventDefault();
-    if (
-      !(
-        enteredEmail.match("[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$") &&
-        enteredPassword !== ""
-      )
-    ) {
-      console.log("wrong");
-      return;
-    }
+    // if (
+    //   !(
+    //     enteredEmail.match("[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$") &&
+    //     enteredPassword !== ""
+    //   )
+    // ) {
+    //   console.log("wrong");
+    //   return;
+    // }
 
-    console.log(`${enteredEmail} with password: ${enteredPassword} LOGGED IN `);
+    // console.log(`${enteredEmail} with password: ${enteredPassword} LOGGED IN `);
     clearInputs();
   };
 
   const registerSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(`${enteredEmail} with password: ${enteredPassword} SIGNED UP `);
+    // console.log(`${enteredEmail} with password: ${enteredPassword} SIGNED UP `);
     clearInputs();
   };
 
@@ -89,7 +89,12 @@ function LoginForm() {
 
           {!registerFormVisible && (
             <div className="form__txt_field">
-              <input type="password" required onChange={passwordHandler} value={enteredPassword} />
+              <input
+                type="password"
+                required
+                onChange={passwordHandler}
+                value={enteredPassword}
+              />
               <span></span>
               <label>Password</label>
             </div>
