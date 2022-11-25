@@ -25,6 +25,7 @@
 
 .right-pane {
   display: flex;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   margin: 0 10px 0 0;
@@ -64,7 +65,7 @@
   height: 100%;
   flex-direction: column;
   gap: 20px;
-  align-items: flex-start;
+  align-items: center;
   margin: 0 0 0 12px;
 }
 
@@ -173,4 +174,8 @@
   .left-pane {
     gap: 6px;
   }
+}
+
+.profile__edit-btn {
+  /* margin: 0 0 12px 0 !important; */
 }
