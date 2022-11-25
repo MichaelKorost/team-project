@@ -25,13 +25,10 @@ const pages = [
     text: "Admin Dashboard",
     to: "/admin",
   },
+
   {
-    text: "Find Donors",
-    to: "/donors",
-  },
-  {
-    text: "Homepage",
-    to: "/",
+    text: "Donate",
+    to: "/donate",
   },
   {
     text: "Profile",
@@ -39,7 +36,7 @@ const pages = [
   },
   {
     text: "LogOut",
-    to: "/logout",
+    to: "/login",
   },
 ];
 
@@ -49,7 +46,7 @@ function ResponsiveAppBar() {
   const [menuState, setMenuState] = useState(false);
 
   return (
-    <Router>
+    <>
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
@@ -90,17 +87,19 @@ function ResponsiveAppBar() {
             </Box>
 
             {/* desktop */}
-            <Box
-              component="img"
-              sx={{
-                height: 40,
-                width: 40,
-                mr: 1,
-                p: 1,
-              }}
-              alt="BloodyBuddy"
-              src={Logo}
-            />
+            <Link to={"/"}>
+              <Box
+                component="img"
+                sx={{
+                  height: 40,
+                  width: 40,
+                  mr: 1,
+                  p: 1,
+                }}
+                alt="BloodyBuddy"
+                src={Logo}
+              />
+            </Link>
 
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map(({ text, to }, index) => (
@@ -117,7 +116,7 @@ function ResponsiveAppBar() {
           </Toolbar>
         </Container>
       </AppBar>
-    </Router>
+    </>
   );
 }
 export default ResponsiveAppBar;

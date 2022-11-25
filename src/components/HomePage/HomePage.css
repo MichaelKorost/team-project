@@ -1,6 +1,6 @@
 .homepage-page {
   display: flex;
-  height: calc(100vh - 64px);
+  height: calc(100vh - 68.5px);
   justify-content: space-around;
   align-items: center;
   gap: 20px;

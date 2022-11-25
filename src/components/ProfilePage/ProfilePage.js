@@ -89,7 +89,6 @@ const ProfilePage = () => {
         </section>
         <section className="right-pane">
           <div className="profile-info">
-            {/* <h1 className="profile-info__fullname">Moti luchim, 39</h1> */}
             <div className="profile-info-box">
               <div className="profile-info-snippet">
                 <label className="profile-info__category">First Name: </label>
@@ -135,7 +134,7 @@ const ProfilePage = () => {
         onCloseModal={closeEditModal}
         isOpen={isEditOpen}
       />
-      (
+
       <DonateDetailsModal
         isOpen={isDetailsOpen}
         onCloseModal={closeDetailsModal}
@@ -143,7 +142,6 @@ const ProfilePage = () => {
         timeString={timeString}
         onOpenModal={openDetailsModal}
       />
-      )
     </>
   );
 };

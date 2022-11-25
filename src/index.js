@@ -25,7 +25,9 @@ root.render(
       <AppointmentProvider>
         <ThemeProvider theme={theme}>
           <Router>
-            <App />
+            <Routes>
+              <Route path="*" element={<App />}></Route>
+            </Routes>
           </Router>
         </ThemeProvider>
       </AppointmentProvider>

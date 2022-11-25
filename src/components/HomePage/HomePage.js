@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import "./HomePage.css";
 
@@ -16,7 +17,9 @@ const HomePage = () => {
         </div>
 
         <div className="button-container">
-          <button className="donate-button">I want to donate!</button>
+          <Link to="/donate">
+            <button className="donate-button">I want to donate!</button>
+          </Link>
         </div>
       </div>
     </>

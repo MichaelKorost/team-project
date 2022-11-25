@@ -38,13 +38,6 @@ export default function TimeInput({ onTimeSelect }) {
           onOpen={() => setOpen(true)}
           onClose={() => setOpen(false)}
           open={open}
-          //   shouldDisableTime={(timeValue, clockType) => {
-          //     if (clockType === "minutes" && timeValue % 10) {
-          //       return true;
-          //     }
-
-          //     return false;
-          //   }}
         />
       </Stack>
     </LocalizationProvider>

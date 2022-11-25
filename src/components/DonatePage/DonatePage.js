@@ -7,6 +7,7 @@ import { Button } from "@mui/material";
 import AppointmentModal from "../Modals/AppointmentModal/AppointmentModal";
 import DonateDetailsModal from "../Modals/DonateDetailsModal/DonateDetailsModal";
 import { AppointmentContext } from "../../contexts/AppointmentContext";
+import { useNavigate } from "react-router-dom";
 
 // TODO: local storage date and time, so refresh wont reload appointment
 // TODO: appnt saved into db or localStorage and is init val to date string
@@ -24,6 +25,8 @@ const DonatePage = () => {
     confirmedDate,
     setConfirmedDate,
   } = useContext(AppointmentContext);
+
+  const navigate = useNavigate();
 
   const [selectedDate, SetSelectedDate] = useState("");
   const [time, setTime] = useState(null);
@@ -48,7 +51,9 @@ const DonatePage = () => {
     setIsOpen(false);
   };
 
-  const backButtonHandler = () => {};
+  const profileButtonHandler = () => {
+    navigate("/profile");
+  };
 
   const modalAcceptHandler = () => {
     closeModal();
@@ -121,13 +126,12 @@ const DonatePage = () => {
                 {confirmedDate + " AT " + timeString}
               </h1>
               <div className="appointment__location"></div>
-              <Button onClick={backButtonHandler}>Back</Button>
+              <Button onClick={profileButtonHandler}>Go to profile</Button>
             </>
           ) : (
             <>
               <h1 className="appointment__title">No Appointment set, yet.</h1>
               <div className="appointment__location"></div>
-              <Button onClick={backButtonHandler}>Back</Button>
             </>
           )}
         </section>
