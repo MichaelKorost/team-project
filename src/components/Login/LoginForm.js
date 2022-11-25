@@ -1,5 +1,7 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../AuthContext";
 import "./LoginForm.css";
 
 function LoginForm() {
@@ -10,6 +12,10 @@ function LoginForm() {
   const [enteredPasswordConfirmation, setEnteredPasswordConfirmation] =
     useState("");
 
+  const { user, register, login, logout, isLoading, setIsLoading } =
+    useContext(AuthContext);
+
+  const navigate = useNavigate();
   useEffect(() => {
     setIsFormValid(
       enteredPassword === enteredPasswordConfirmation &&
@@ -45,26 +51,43 @@ function LoginForm() {
     setEnteredPasswordConfirmation(e.target.value);
   };
 
-  const loginSubmitHandler = (e) => {
+  const loginSubmitHandler = async (e) => {
     e.preventDefault();
-    // if (
-    //   !(
-    //     enteredEmail.match("[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$") &&
-    //     enteredPassword !== ""
-    //   )
-    // ) {
-    //   console.log("wrong");
-    //   return;
-    // }
+    try {
+      await login(enteredEmail, enteredPassword);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
 
-    // console.log(`${enteredEmail} with password: ${enteredPassword} LOGGED IN `);
+    /*
+    david's method
+const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      // go to db
+      await login({ email, password });
+      setLoading(false);
+
+      // navigate to a different page
+      navigate("/");
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+      setError(processFirebaseErrors(err.message));
+    }
+  };
+
+    */
     clearInputs();
   };
 
-  const registerSubmitHandler = (e) => {
+  const registerSubmitHandler = async (e) => {
     e.preventDefault();
-    // console.log(`${enteredEmail} with password: ${enteredPassword} SIGNED UP `);
+    await register(enteredEmail, enteredPasswordConfirmation);
     clearInputs();
+    navigate("/");
   };
 
   return (

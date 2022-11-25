@@ -6,12 +6,12 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "./firebase/firebaseConfig";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [isLoading, setIsLoading] = useState(true);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
 
   const register = async (email, password) => {
@@ -50,7 +50,9 @@ export function AuthProvider({ children }) {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, register, login, logout, isLoading }}>
+    <AuthContext.Provider
+      value={{ user, register, login, logout, isLoading, setIsLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );

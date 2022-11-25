@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -19,6 +19,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Drawer from "@mui/material/Drawer";
 import Logo from "../../images/Logo.png";
+import { AuthContext } from "../../AuthContext";
 
 const pages = [
   {
@@ -34,16 +35,23 @@ const pages = [
     text: "Profile",
     to: "/profile",
   },
-  {
-    text: "LogOut",
-    to: "/login",
-  },
 ];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [menuState, setMenuState] = useState(false);
+
+  const { user, register, login, logout, isLoading, setIsLoading } =
+    useContext(AuthContext);
+
+  const logoutHandler = async () => {
+    await logout;
+  };
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   return (
     <>
@@ -82,6 +90,11 @@ function ResponsiveAppBar() {
                       </ListItem>
                     );
                   })}
+                  <ListItem disablePadding key={"logout"}>
+                    <ListItemButton component={Link} to={"/login"}>
+                      <ListItemText primary={"text"} onClick={logoutHandler} />
+                    </ListItemButton>
+                  </ListItem>
                 </List>
               </Drawer>
             </Box>
