@@ -8,17 +8,20 @@ import AppointmentModal from "./components/Modals/AppointmentModal/AppointmentMo
 import DonateDetailsModal from "./components/Modals/DonateDetailsModal/DonateDetailsModal";
 import ProfileForm from "./components/profileForm/ProfileForm";
 import ProfileEditModal from "./components/Modals/ProfileEditModal/ProfileEditModal";
+import Dashboard from "./components/Dashboard/Dashboard";
+
 function App() {
   return (
     <div className="App">
       {/* <Navbar /> */}
       {/* <LoginForm /> */}
       {/* <HomePage /> */}
-      <ProfilePage />
+      {/* <ProfilePage /> */}
       {/* <DonatePage /> */}
       {/* <AppointmentModal /> */}
       {/* <ProfileForm /> */}
       {/* <ProfileEditModal /> */}
+      <Dashboard />
     </div>
   );
 }
