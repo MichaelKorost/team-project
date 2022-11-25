@@ -1,17 +1,32 @@
 import "./ProfilePage.css";
 import { Button, Typography } from "@mui/material";
 import Navbar from "../Navbar/Navbar";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import ProfileEditModal from "../Modals/ProfileEditModal/ProfileEditModal";
+import { AppointmentContext } from "../../contexts/AppointmentContext";
+import DonateDetailsModal from "../Modals/DonateDetailsModal/DonateDetailsModal";
 // TODO: add isConfirmed boolean to profile
 // TODO: implement appointment details btn
 // TODO: change detail text depending if confirmed or not
 
 const ProfilePage = () => {
+  const {
+    dateString,
+    setDateString,
+    timeString,
+    setTimeString,
+    isConfirmed,
+    setIsConfirmed,
+    confirmedDate,
+    setConfirmedDate,
+  } = useContext(AppointmentContext);
+
   const [file, setFile] = useState("");
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
+  // edit modal
   const openEditModal = () => {
     setIsEditOpen(true);
   };
@@ -19,6 +34,18 @@ const ProfilePage = () => {
   const closeEditModal = () => {
     setIsEditOpen(false);
   };
+  // end of edit modal
+
+  // appointment modal
+  const closeDetailsModal = () => {
+    setIsDetailsOpen(false);
+  };
+
+  const openDetailsModal = () => {
+    setIsDetailsOpen(true);
+  };
+
+  // end of appointment modal
 
   return (
     <>
@@ -51,7 +78,8 @@ const ProfilePage = () => {
             </Button>
           </div>
           <Button
-            disabled={false}
+            disabled={!isConfirmed}
+            onClick={openDetailsModal}
             variant="contained"
             className="profile__appointment-button"
             style={{ margin: "auto" }}
@@ -107,6 +135,15 @@ const ProfilePage = () => {
         onCloseModal={closeEditModal}
         isOpen={isEditOpen}
       />
+      (
+      <DonateDetailsModal
+        isOpen={isDetailsOpen}
+        onCloseModal={closeDetailsModal}
+        confirmedDate={confirmedDate}
+        timeString={timeString}
+        onOpenModal={openDetailsModal}
+      />
+      )
     </>
   );
 };
