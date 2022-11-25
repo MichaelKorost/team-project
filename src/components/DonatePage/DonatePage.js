@@ -14,15 +14,21 @@ import { AppointmentContext } from "../../contexts/AppointmentContext";
 // TODO: add navigation to back button
 
 const DonatePage = () => {
-  const { msg } = useContext(AppointmentContext);
+  const {
+    dateString,
+    setDateString,
+    timeString,
+    setTimeString,
+    isConfirmed,
+    setIsConfirmed,
+    confirmedDate,
+    setConfirmedDate,
+  } = useContext(AppointmentContext);
+
   const [selectedDate, SetSelectedDate] = useState("");
-  const [dateString, setDateString] = useState("");
   const [time, setTime] = useState(null);
-  const [timeString, setTimeString] = useState("");
   const [isDateValid, setIsDateValid] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [isConfirmed, setIsConfirmed] = useState(false);
-  const [confirmedDate, setConfirmedDate] = useState("");
   // view appointment details button
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
