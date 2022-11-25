@@ -1,11 +1,12 @@
 import "./DonatePage.css";
 import ResponsiveAppBar from "../Navbar/Navbar";
 import Calendar from "../Calendar/Calender";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TimeInput from "../TimeInput/TimeInput";
 import { Button } from "@mui/material";
 import AppointmentModal from "../Modals/AppointmentModal/AppointmentModal";
 import DonateDetailsModal from "../Modals/DonateDetailsModal/DonateDetailsModal";
+import { AppointmentContext } from "../../contexts/AppointmentContext";
 
 // TODO: local storage date and time, so refresh wont reload appointment
 // TODO: appnt saved into db or localStorage and is init val to date string
@@ -13,6 +14,7 @@ import DonateDetailsModal from "../Modals/DonateDetailsModal/DonateDetailsModal"
 // TODO: add navigation to back button
 
 const DonatePage = () => {
+  const { msg } = useContext(AppointmentContext);
   const [selectedDate, SetSelectedDate] = useState("");
   const [dateString, setDateString] = useState("");
   const [time, setTime] = useState(null);
