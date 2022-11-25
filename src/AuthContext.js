@@ -10,28 +10,39 @@ import { auth } from "./firebase/firebaseConfig";
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const register = async (email, password) => {
-    console.log("trying to register", auth, email, password);
-    createUserWithEmailAndPassword(auth, email, password);
-  };
-
-  const login = async (email, password) => {
-    signInWithEmailAndPassword(auth, email, password);
-  };
-
-  const logout = async () => {
-    signOut(auth);
-  };
-
   const [isLoading, setIsLoading] = useState(true);
 
   const [user, setUser] = useState(null);
 
+  const register = async (email, password) => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const login = async (email, password) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const logout = async () => {
+    await signOut(auth);
+  };
+  // david's method
+  // const logout = async() => {
+  // await auth.signOut()
+  // }
+
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (credentials) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setIsLoading(false);
-      console.log("onAuthStateChanged :: new user data is:", credentials);
-      setUser(credentials);
+      console.log("onAuthStateChanged :: new user data is:", currentUser);
+      setUser(currentUser);
     });
     return () => {
       unsubscribe();
