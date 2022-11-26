@@ -11,7 +11,9 @@ export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );
 
   const register = async (email, password) => {
     try {
@@ -43,6 +45,8 @@ export function AuthProvider({ children }) {
       setIsLoading(false);
       console.log("onAuthStateChanged :: new user data is:", currentUser);
       setUser(currentUser);
+      //   localstorage to keep to user in session instantly instead of awaiting
+      localStorage.setItem("user", JSON.stringify(currentUser));
     });
     return () => {
       unsubscribe();

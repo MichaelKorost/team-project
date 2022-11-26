@@ -1,19 +1,19 @@
-import { useContext, useEffect, useState } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Drawer from '@mui/material/Drawer';
-import Logo from '../../images/Logo.png';
-import { AuthContext } from '../../AuthContext';
+import { useContext, useEffect, useState } from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Drawer from "@mui/material/Drawer";
+import Logo from "../../images/Logo.png";
+import { AuthContext } from "../../AuthContext";
 // import Typography from '@mui/material/Typography';
 // import Menu from '@mui/material/Menu';
 // import Avatar from '@mui/material/Avatar';
@@ -24,17 +24,17 @@ import { AuthContext } from '../../AuthContext';
 
 const pages = [
   {
-    text: 'Admin',
-    to: '/admin',
+    text: "Admin",
+    to: "/admin",
   },
 
   {
-    text: 'Donate',
-    to: '/donate',
+    text: "Donate",
+    to: "/donate",
   },
   {
-    text: 'Profile',
-    to: '/profile',
+    text: "Profile",
+    to: "/profile",
   },
 ];
 
@@ -50,33 +50,32 @@ function ResponsiveAppBar() {
     await logout();
   };
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
     <>
-      <AppBar position='static'>
-        <Container maxWidth='xl'>
+      <AppBar position="static">
+        <Container maxWidth="xl">
           <Toolbar disableGutters>
             {/* mobile */}
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
-                size='large'
+                size="large"
                 onClick={() => setMenuState(true)}
-                color='inherit'>
+                color="inherit"
+              >
                 <MenuIcon />
               </IconButton>
               <Drawer
-                anchor='top'
+                anchor="top"
                 open={menuState}
-                onClose={() => setMenuState(false)}>
+                onClose={() => setMenuState(false)}
+              >
                 <List onClick={() => setMenuState(false)}>
                   <ListItem
                     disablePadding
-                    sx={{ backgroundColor: '#ccc', color: '#666' }}>
+                    sx={{ backgroundColor: "#ccc", color: "#666" }}
+                  >
                     <ListItemButton>
-                      <ListItemText primary={'Close'} />
+                      <ListItemText primary={"Close"} />
                     </ListItemButton>
                   </ListItem>
                   {pages.map(({ text, to }, i) => {
@@ -88,10 +87,10 @@ function ResponsiveAppBar() {
                       </ListItem>
                     );
                   })}
-                  <ListItem disablePadding key={'logout'}>
-                    <ListItemButton component={Link} to={'/login'}>
+                  <ListItem disablePadding key={"logout"}>
+                    <ListItemButton component={Link} to={"/login"}>
                       <ListItemText
-                        primary={'Logout'}
+                        primary={"Logout"}
                         onClick={logoutHandler}
                       />
                     </ListItemButton>
@@ -101,37 +100,39 @@ function ResponsiveAppBar() {
             </Box>
 
             {/* desktop */}
-            <Link to={'/'}>
+            <Link to={"/"}>
               <Box
-                component='img'
+                component="img"
                 sx={{
                   height: 40,
                   width: 40,
                   mr: 1,
                   p: 1,
                 }}
-                alt='BloodyBuddy'
+                alt="BloodyBuddy"
                 src={Logo}
               />
             </Link>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map(({ text, to }, index) => (
                 <Button
                   key={index}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{ my: 2, color: "white", display: "block" }}
                   component={Link}
-                  to={to}>
+                  to={to}
+                >
                   {text}
                 </Button>
               ))}
               <Button
                 // key={index}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: "white", display: "block" }}
                 onClick={logoutHandler}
                 component={Link}
-                to={'/login'}>
-                {'Logout'}
+                to={"/login"}
+              >
+                {"Logout"}
               </Button>
             </Box>
           </Toolbar>

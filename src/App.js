@@ -27,14 +27,7 @@ function App() {
           path="/login"
           element={user ? <Navigate to="/" /> : <LoginForm />}
         />
-        <Route
-          path="/"
-          element={
-            <RequireAuth>
-              <HomePage />
-            </RequireAuth>
-          }
-        />
+        <Route path="/" element={<RequireAuth>{<HomePage />}</RequireAuth>} />
         <Route
           path="/profile"
           element={
