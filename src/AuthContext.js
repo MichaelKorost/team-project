@@ -28,11 +28,14 @@ export function AuthProvider({ children }) {
       await setDoc(doc(db, "users", res.user.uid), {
         email: email,
         firstName: null,
-        lastname: null,
+        lastName: null,
         dob: null,
         bloodType: null,
         phoneNumber: null,
         bloodType: null,
+        hmo: null,
+        photoURL: null,
+        appointment: null,
         timeStamp: serverTimestamp(),
       });
     } catch (error) {
@@ -56,10 +59,6 @@ export function AuthProvider({ children }) {
   // const logout = async() => {
   // await auth.signOut()
   // }
-
-  // const updateProfile = async () => {
-  //   await updateProfile(currentUser), {};
-  // };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
