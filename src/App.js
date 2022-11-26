@@ -1,35 +1,31 @@
-import "./App.css";
-import LoginForm from "./components/Login/LoginForm";
-import HomePage from "./components/HomePage/HomePage";
-import ProfilePage from "./components/ProfilePage/ProfilePage";
-import DonatePage from "./components/DonatePage/DonatePage";
-import Dashboard from "./components/Dashboard/Dashboard";
-import PageNotFound from "./components/PageNotFound/PageNotFound";
-import { Navigate, Route, Routes } from "react-router-dom";
-import RequireAuth from "./components/RequireAuth/RequireAuth";
-import LoadingPage from "./components/LoadingPage/LoadingPage";
-import { useContext } from "react";
-import { AuthContext } from "./AuthContext";
+import './App.css';
+import LoginForm from './components/Login/LoginForm';
+import HomePage from './components/HomePage/HomePage';
+import ProfilePage from './components/ProfilePage/ProfilePage';
+import DonatePage from './components/DonatePage/DonatePage';
+import Dashboard from './components/Dashboard/Dashboard';
+import PageNotFound from './components/PageNotFound/PageNotFound';
+import { Route, Routes } from 'react-router-dom';
+import RequireAuth from './components/RequireAuth/RequireAuth';
+import LoadingPage from './components/LoadingPage/LoadingPage';
+
+import LoggedInWrapper from './components/LoggedWrapper/LoggedWrapper';
 
 function App() {
-  // this is handled in RequireAuth component...
-  const { user } = useContext(AuthContext);
-  // const RequireAuth = ({ children }) => {
-  //   return user ? children : <Navigate to='/login' />;
-  //     checking for user takes time
-  // suddenly works
-  // };
-
   return (
-    <div className="App">
+    <div className='App'>
       <Routes>
         <Route
-          path="/login"
-          element={user ? <Navigate to="/" /> : <LoginForm />}
+          path='/login'
+          element={
+            <LoggedInWrapper>
+              <LoginForm />
+            </LoggedInWrapper>
+          }
         />
-        <Route path="/" element={<RequireAuth>{<HomePage />}</RequireAuth>} />
+        <Route path='/' element={<RequireAuth>{<HomePage />}</RequireAuth>} />
         <Route
-          path="/profile"
+          path='/profile'
           element={
             <RequireAuth>
               <ProfilePage />
@@ -37,7 +33,7 @@ function App() {
           }
         />
         <Route
-          path="/donate"
+          path='/donate'
           element={
             <RequireAuth>
               <DonatePage />
@@ -45,7 +41,7 @@ function App() {
           }
         />
         <Route
-          path="/admin"
+          path='/admin'
           element={
             <RequireAuth>
               <Dashboard />
@@ -53,7 +49,7 @@ function App() {
           }
         />
         {/* <Route path='*' element={<PageNotFound />} /> */}
-        <Route path="*" element={<LoadingPage />} />
+        <Route path='*' element={<LoadingPage />} />
       </Routes>
 
       {/* <Routes>
