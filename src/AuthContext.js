@@ -1,12 +1,11 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-} from 'firebase/auth';
-import { auth } from './firebase/firebaseConfig';
-import { useNavigate } from 'react-router-dom';
+} from "firebase/auth";
+import { auth } from "./firebase/firebaseConfig";
 
 export const AuthContext = createContext();
 
@@ -42,7 +41,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setIsLoading(false);
-      console.log('onAuthStateChanged :: new user data is:', currentUser);
+      console.log("onAuthStateChanged :: new user data is:", currentUser);
       setUser(currentUser);
     });
     return () => {
@@ -52,7 +51,8 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, register, login, logout, isLoading, setIsLoading }}>
+      value={{ user, register, login, logout, isLoading, setIsLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );
