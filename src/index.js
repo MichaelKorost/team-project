@@ -5,12 +5,7 @@ import App from "./App";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { AuthProvider } from "./AuthContext";
 import { AppointmentProvider } from "./contexts/AppointmentContext";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Outlet,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 const theme = createTheme({
   palette: {

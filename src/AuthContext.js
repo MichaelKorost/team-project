@@ -4,8 +4,15 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  updateProfile,
 } from "firebase/auth";
-import { auth } from "./firebase/firebaseConfig";
+import {
+  auth,
+  db,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "./firebase/firebaseConfig";
 
 export const AuthContext = createContext();
 
@@ -17,7 +24,17 @@ export function AuthProvider({ children }) {
 
   const register = async (email, password) => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, "users", res.user.uid), {
+        email: email,
+        firstName: null,
+        lastname: null,
+        dob: null,
+        bloodType: null,
+        phoneNumber: null,
+        bloodType: null,
+        timeStamp: serverTimestamp(),
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -40,10 +57,14 @@ export function AuthProvider({ children }) {
   // await auth.signOut()
   // }
 
+  // const updateProfile = async () => {
+  //   await updateProfile(currentUser), {};
+  // };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setIsLoading(false);
-      console.log("onAuthStateChanged :: new user data is:", currentUser);
+      // console.log("onAuthStateChanged :: new user data is:", currentUser);
       setUser(currentUser);
       //   localstorage to keep to user in session instantly instead of awaiting
       localStorage.setItem("user", JSON.stringify(currentUser));

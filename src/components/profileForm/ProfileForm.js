@@ -59,6 +59,11 @@ export default function ProfileForm({ onCloseModal }) {
     setUserProfile({ ...userProfile, lastName: e.target.value.toLowerCase() });
     console.log(userProfile);
   };
+
+  const phoneNumberInputHandler = (e) => {
+    setUserProfile({ ...userProfile, phoneNumber: e.target.value });
+    console.log(userProfile);
+  };
   const dateInputHandle = (date, e) => {
     if (!date) return;
     const minAge = Date.parse(new Date("January 1, 2004"));
@@ -74,6 +79,10 @@ export default function ProfileForm({ onCloseModal }) {
   };
   const selectInputHandle = (e) => {
     setUserProfile({ ...userProfile, bloodType: e.target.value });
+    console.log(userProfile);
+  };
+  const selectHmoHandler = (e) => {
+    setUserProfile({ ...userProfile, hmo: e.target.value });
     console.log(userProfile);
   };
 
@@ -163,6 +172,12 @@ export default function ProfileForm({ onCloseModal }) {
         helperText={lastNameErrMsg ? lastNameErrMsg : ""}
         error={!lastNameValid}
       />
+      <TextField
+        className="form__phone"
+        type={"number"}
+        onChange={(e) => phoneNumberInputHandler(e)}
+        label="Phone number"
+      />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DesktopDatePicker
           label={userProfile.age ? "I was born at" : "Date of birth"}
@@ -207,6 +222,22 @@ export default function ProfileForm({ onCloseModal }) {
           <MenuItem value={"AB-"}>AB-</MenuItem>
           <MenuItem value={"O+"}>O+</MenuItem>
           <MenuItem value={"O-"}>O-</MenuItem>
+        </Select>
+        <FormHelperText> </FormHelperText>
+      </FormControl>
+
+      <FormControl sx={{ minWidth: 120 }}>
+        <InputLabel>Health Maintenance Organization</InputLabel>
+        <Select
+          value={userProfile.hmo ? userProfile.hmo : ""}
+          label="Health Maintenance Organization"
+          error={!userProfile.hmo}
+          onChange={(e) => selectHmoHandler(e)}
+        >
+          <MenuItem value={"clalit"}>Clalit</MenuItem>
+          <MenuItem value={"maccabi"}>Maccabi</MenuItem>
+          <MenuItem value={"leumit"}>Leumit</MenuItem>
+          <MenuItem value={"meuhedet"}>Meuhedet</MenuItem>
         </Select>
         <FormHelperText> </FormHelperText>
       </FormControl>
