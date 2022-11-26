@@ -13,8 +13,7 @@ function LoginForm() {
   const [enteredPasswordConfirmation, setEnteredPasswordConfirmation] =
     useState('');
 
-  const { user, register, login, isLoading, setIsLoading } =
-    useContext(AuthContext);
+  const { register, login, isLoading, setIsLoading } = useContext(AuthContext);
 
   const navigate = useNavigate();
 

@@ -7,9 +7,8 @@ import Dashboard from './components/Dashboard/Dashboard';
 import PageNotFound from './components/PageNotFound/PageNotFound';
 import { Route, Routes } from 'react-router-dom';
 import RequireAuth from './components/RequireAuth/RequireAuth';
-import LoadingPage from './components/LoadingPage/LoadingPage';
-
 import LoggedInWrapper from './components/LoggedWrapper/LoggedWrapper';
+import LoadingPage from './components/LoadingPage/LoadingPage';
 
 function App() {
   return (
@@ -48,18 +47,9 @@ function App() {
             </RequireAuth>
           }
         />
-        {/* <Route path='*' element={<PageNotFound />} /> */}
-        <Route path='*' element={<LoadingPage />} />
-      </Routes>
-
-      {/* <Routes>
-        <Route path='/login' element={<LoginForm />} />
-        <Route path='/' element={<HomePage />} />
-        <Route path='/profile' element={<ProfilePage />} />
-        <Route path='/donate' element={<DonatePage />} />
-        <Route path='/admin' element={<Dashboard />} />
         <Route path='*' element={<PageNotFound />} />
-      </Routes> */}
+        {/* <Route path='*' element={<LoadingPage />} /> */}
+      </Routes>
     </div>
   );
 }
