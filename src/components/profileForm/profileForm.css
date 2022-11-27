@@ -14,3 +14,7 @@
 .edit__button {
   width: 90px;
 }
+
+.form__phone {
+  -webkit-appearance: none;
+}

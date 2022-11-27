@@ -1,6 +1,6 @@
 .homepage-page {
   display: flex;
-  height: calc(100vh - 64px);
+  height: calc(100vh - 68.5px);
   justify-content: space-around;
   align-items: center;
   gap: 20px;
@@ -8,7 +8,6 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: #ff4756c9;
   overflow: hidden;
 }
 
@@ -99,6 +98,7 @@
     font-size: 45px;
     text-align: center;
   }
+
   .about__desc {
     font-size: 24px;
     text-align: center;

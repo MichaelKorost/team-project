@@ -15,13 +15,8 @@ const isWeekend = (date) => {
   return day === 0 || day === 6;
 };
 
-// const getRandomNumber = (min, max) => {
-//   return Math.round(Math.random() * (max - min) + min);
-// };
-
 export default function Calendar({ onCalenderSelect }) {
   const [value, setValue] = useState(dayjs(new Date()));
-  //   const [highlightedDays, setHighlightedDays] = useState([1, 2, 15]);
 
   const changeDateHandler = (newValue) => {
     onCalenderSelect(newValue.$d);
@@ -42,21 +37,6 @@ export default function Calendar({ onCalenderSelect }) {
         shouldDisableDate={isWeekend}
         onChange={changeDateHandler}
         renderInput={(params) => <TextField {...params} />}
-        // renderDay={(day, _value, DayComponentProps) => {
-        //   const isSelected =
-        //     !DayComponentProps.outsideCurrentMonth &&
-        //     highlightedDays.indexOf(day.date()) >= 0;
-
-        //   return (
-        //     <Badge
-        //       key={day.toString()}
-        //       overlap="circular"
-        //       badgeContent={isSelected ? <DoneIcon /> : undefined}
-        //     >
-        //       <PickersDay {...DayComponentProps} />
-        //     </Badge>
-        //   );
-        // }}
       />
     </LocalizationProvider>
   );

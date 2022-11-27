@@ -1,42 +1,96 @@
-import {useState, useEffect, createContext} from "react";
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged} from "firebase/auth";
-import {auth} from "./firebase/firebaseConfig";
+import { useState, useEffect, createContext } from 'react';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+
+  updateProfile,
+} from "firebase/auth";
+import {
+  auth,
+  db,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "./firebase/firebaseConfig";
+
 
 export const AuthContext = createContext();
 
-export function AuthProvider({children}) {
+export function AuthProvider({ children }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem('user')) || null
+  );
 
-	const register = async (email, password) => {
-		console.log("trying to register", auth, email, password);
-		createUserWithEmailAndPassword(auth, email, password);
-	}
+  const register = async (email, password) => {
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, "users", res.user.uid), {
+        email: email,
+        firstName: null,
+        lastName: null,
+        dob: null,
+        bloodType: null,
+        phoneNumber: null,
+        bloodType: null,
+        hmo: null,
+        photoURL: null,
+        appointment: null,
+        timeStamp: serverTimestamp(),
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
-	const login = async (email, password) => {
-		signInWithEmailAndPassword(auth, email, password);
-	}
+  const login = async (email, password) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
-	const logout = async () => {
-		signOut(auth);
-	}
+  const logout = async () => {
+    await signOut(auth);
+    setIsLoading(false);
+  };
+  // david's method
+  // const logout = async() => {
+  // await auth.signOut()
+  // }
 
-	const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setIsLoading(false);
 
-	const [user, setUser] = useState(null);
+      // console.log("onAuthStateChanged :: new user data is:", currentUser);
 
-	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (credentials) => {
-			setIsLoading(false);
-			console.log("onAuthStateChanged :: new user data is:", credentials);
-			setUser(credentials);
-		});
-		return () => {
-			unsubscribe();
-		}
-	}, [user]);
+      setUser(currentUser);
+      //   localstorage to keep to user in session instantly instead of awaiting
+      localStorage.setItem('user', JSON.stringify(currentUser));
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [user]);
 
-	return (
-		<AuthContext.Provider value={{user, register, login, logout, isLoading}}>
-			{children}
-		</AuthContext.Provider>
-	);
+  return (
+    <AuthContext.Provider
+
+      value={{
+        user,
+        register,
+        login,
+        logout,
+        isLoading,
+        setIsLoading,
+      }}
+    >
+
+      {children}
+    </AuthContext.Provider>
+  );
 }

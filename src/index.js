@@ -5,6 +5,7 @@ import App from "./App";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { AuthProvider } from "./AuthContext";
 import { AppointmentProvider } from "./contexts/AppointmentContext";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -23,7 +24,11 @@ root.render(
     <AuthProvider>
       <AppointmentProvider>
         <ThemeProvider theme={theme}>
-          <App />
+          <Router>
+            <Routes>
+              <Route path="*" element={<App />}></Route>
+            </Routes>
+          </Router>
         </ThemeProvider>
       </AppointmentProvider>
     </AuthProvider>
