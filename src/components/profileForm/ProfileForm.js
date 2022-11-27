@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./profileForm.css";
 import TextField from "@mui/material/TextField";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
@@ -15,6 +15,7 @@ import {
   getDocs,
   updateDoc,
 } from "../../firebase/firebaseConfig";
+import { AuthContext } from "../../AuthContext";
 
 export default function ProfileForm({ onCloseModal }) {
   // ----------start states
@@ -27,12 +28,14 @@ export default function ProfileForm({ onCloseModal }) {
     "Last name should be more than 1 character"
   );
   const [lastNameValid, SetLastNameValid] = useState(false);
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({}); //removed
   //  ----------date states
   const [isMinAge, setIsMinAge] = useState(false);
   const [dateValue, setDateValue] = useState(new Date());
   const [open, setOpen] = useState(false);
   // const [users, setUsers] = useState([]);
+
+  const { user } = useContext(AuthContext);
 
   // ----------end states
 
@@ -59,13 +62,18 @@ export default function ProfileForm({ onCloseModal }) {
     setUserProfile({ ...userProfile, lastName: e.target.value.toLowerCase() });
     console.log(userProfile);
   };
+
+  const phoneNumberInputHandler = (e) => {
+    setUserProfile({ ...userProfile, phoneNumber: e.target.value });
+    console.log(userProfile);
+  };
   const dateInputHandle = (date, e) => {
     if (!date) return;
     const minAge = Date.parse(new Date("January 1, 2004"));
     const pickedDate = Date.parse(date.format("YYYY-MM-DD"));
     setDateValue(date);
     if (pickedDate < minAge) {
-      setUserProfile({ ...userProfile, age: date.format("YYYY-MM-DD") });
+      setUserProfile({ ...userProfile, dob: date.format("YYYY-MM-DD") });
       console.log(userProfile);
       setIsMinAge(true);
       return;
@@ -74,6 +82,10 @@ export default function ProfileForm({ onCloseModal }) {
   };
   const selectInputHandle = (e) => {
     setUserProfile({ ...userProfile, bloodType: e.target.value });
+    console.log(userProfile);
+  };
+  const selectHmoHandler = (e) => {
+    setUserProfile({ ...userProfile, hmo: e.target.value });
     console.log(userProfile);
   };
 
@@ -117,28 +129,32 @@ export default function ProfileForm({ onCloseModal }) {
 
   // ---------start firestore shenanigans
 
-  const usersCollectionRef = collection(db, "users");
+  // the whole user collection is not needed -michael
 
+  // const usersCollectionRef = collection(db, "users");
+
+  // useEffect(() => {
+  //   const getUsers = async () => {
+  //     const data = await getDocs(usersCollectionRef);
+  //     console.log(data);
+  //     setUser(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  //   };
+  //   getUsers();
+  // }, []);
+
+  // user.uid came from authContext
   useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(usersCollectionRef);
-      console.log(data);
-      setUser(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getUsers();
+    console.log(user.uid);
   }, []);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   const updateProfile = async () => {
     if (user) {
-      const docRef = doc(db, "users", user[0].id);
+      const docRef = doc(db, "users", user.uid);
       await updateDoc(docRef, { ...userProfile });
       console.log(docRef);
     }
   };
+
   //our data to pass into firestore is in the form output
   // and that is - > userProfile
   // ---------end firestore shenanigans
@@ -162,6 +178,12 @@ export default function ProfileForm({ onCloseModal }) {
         label="Last Name"
         helperText={lastNameErrMsg ? lastNameErrMsg : ""}
         error={!lastNameValid}
+      />
+      <TextField
+        className="form__phone"
+        type={"number"}
+        onChange={(e) => phoneNumberInputHandler(e)}
+        label="Phone number"
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DesktopDatePicker
@@ -210,6 +232,22 @@ export default function ProfileForm({ onCloseModal }) {
         </Select>
         <FormHelperText> </FormHelperText>
       </FormControl>
+
+      <FormControl sx={{ minWidth: 120 }}>
+        <InputLabel>Health Maintenance Organization</InputLabel>
+        <Select
+          value={userProfile.hmo ? userProfile.hmo : ""}
+          label="Health Maintenance Organization"
+          error={!userProfile.hmo}
+          onChange={(e) => selectHmoHandler(e)}
+        >
+          <MenuItem value={"clalit"}>Clalit</MenuItem>
+          <MenuItem value={"maccabi"}>Maccabi</MenuItem>
+          <MenuItem value={"leumit"}>Leumit</MenuItem>
+          <MenuItem value={"meuhedet"}>Meuhedet</MenuItem>
+        </Select>
+        <FormHelperText> </FormHelperText>
+      </FormControl>
       <div className="edit__actions">
         <Button
           className="edit__button"
@@ -219,7 +257,7 @@ export default function ProfileForm({ onCloseModal }) {
             !(
               userProfile.firstName &&
               userProfile.lastName &&
-              userProfile.age &&
+              userProfile.dob &&
               userProfile.bloodType &&
               !firstNameErrMsg &&
               !lastNameErrMsg &&
