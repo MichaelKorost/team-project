@@ -1,8 +1,8 @@
-import {apiKey} from "./tokens";
+import {geocodeApiKey, placesApiKey} from "./tokens";
 
 export async function fetchAllMatchingAddresses(address) {
 	try {
-		const req = await fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=${apiKey}`);
+		const req = await fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=${geocodeApiKey}`);
 		const json = await req.json();
 		return json;
 	} catch (err) {
@@ -47,6 +47,30 @@ export async function fetchRoute(coors) {
 	}
 }
 
+// find hospitals near my area, return the nearest one
+export async function fetchNearbyHospitals(coor) {
+	try {
+		const req = await fetch(`https://api.geoapify.com/v2/places?categories=healthcare.hospital&bias=proximity:${coor.join(",")}&limit=20&apiKey=${placesApiKey}`);
+		const json = await req.json();
+		return json.features;
+	} catch (err) {
+		console.erroror("fetchNearbyHospitals :: fetch error", {coor}, err);
+		return null;
+	}
+}
+
+// get list of hospitals (features array from geoapify's places api) and return the nearest one
+export function findNearestHospital(hosptalList) {
+	try {
+		return hosptalList.reduce((nominee, curr) => curr.properties.distance < nominee.properties.distance ? curr : nominee);
+	} catch (err) {
+		console.error("findNearestHospital :: issue finding the nearest hospital. please check input", {hosptalList});
+	}
+}
+
+// decode polyline data (could have just forEached over the maneuovers but meh. tried to decode but whose brightest idea was to use a bitwise or, am i supposed
+// to pull out my magic wand and poof know which byte the 6th byte was :p anyway was too lazy to figure this one out, i've been pretty edepressed lately
+// so ima steal it from github like a REAL developer
 export function decodeGeometry(encoded) {
 	// https://stackoverflow.com/questions/15924834/decoding-polyline-with-new-google-maps-api
 	if (!encoded) {
@@ -86,6 +110,7 @@ export function decodeGeometry(encoded) {
 	return poly;
 }
 
+// conver geoapify's geocode api's steps to  actual coordinates that will be used to trace a path
 export function stepsToPoints(steps) {
 	const coors = [];
 	steps.forEach(step => {
