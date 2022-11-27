@@ -19,7 +19,7 @@ import { AuthContext } from "../../AuthContext";
 
 export default function ProfileForm({ onCloseModal }) {
   // ----------start states
-  const [userProfile, setUserProfile] = useState({}); //moved to userCtx
+  const [userProfile, setUserProfile] = useState({});
   const [firstNameErrMsg, setFirstNameErrMsg] = useState(
     "First name should be more than 1 character"
   );

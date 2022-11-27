@@ -48,7 +48,7 @@ const ProfilePage = () => {
       setUserInfo(docUser.data());
       console.log(userInfo);
     };
-  }, []);
+  }, [isEditOpen]);
 
   // useEffect(() => {
   //   (async () => {
