@@ -39,7 +39,9 @@ const ProfilePage = () => {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   // uploading img
   const [percentage, setPercentage] = useState(null);
-  const [isUpload, setIsUpload] = useState(false);
+  const [photoURL, setPhotoURL] = useState(
+    "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+  );
   // getting document
   const [userInfo, setUserInfo] = useState({});
 
@@ -51,7 +53,7 @@ const ProfilePage = () => {
       setUserInfo(docUser.data());
       console.log(userInfo);
     };
-  }, [isEditOpen, file]);
+  }, [isEditOpen]);
 
   // edit modal
   const openEditModal = () => {
@@ -81,13 +83,14 @@ const ProfilePage = () => {
       if (user) {
         const docRef = doc(db, "users", user.uid);
         await updateDoc(docRef, { photoURL: downloadURL });
+        setUserInfo({ ...userInfo, photoURL: downloadURL });
         console.log(docRef);
       }
     };
 
     const uploadFile = () => {
       const name = new Date().getTime() + file.name; //used to avoid same name
-      const storageRef = ref(storage, file.name); // taken from docs
+      const storageRef = ref(storage, file.name); // where to upload
       console.log(name);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
