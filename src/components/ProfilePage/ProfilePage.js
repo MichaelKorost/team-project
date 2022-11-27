@@ -12,14 +12,14 @@ import {
   getDoc,
   getDocs,
   onSnapshot,
+  updateDoc,
 } from "firebase/firestore";
-import { db } from "../../firebase/firebaseConfig";
+import { db, storage } from "../../firebase/firebaseConfig";
 import { AuthContext } from "../../AuthContext";
-// TODO: add isConfirmed boolean to profile
-// TODO: implement appointment details btn
-// TODO: change detail text depending if confirmed or not
-// TODO: change profile card text based on firestore data
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { updateProfile } from "firebase/auth";
 
+// TODO: make pfp rerender on upload
 const ProfilePage = () => {
   const {
     dateString,
@@ -37,6 +37,9 @@ const ProfilePage = () => {
   const [file, setFile] = useState("");
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  // uploading img
+  const [percentage, setPercentage] = useState(null);
+  const [isUpload, setIsUpload] = useState(false);
   // getting document
   const [userInfo, setUserInfo] = useState({});
 
@@ -48,17 +51,7 @@ const ProfilePage = () => {
       setUserInfo(docUser.data());
       console.log(userInfo);
     };
-  }, [isEditOpen]);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const docRef = doc(db, "users", user.uid);
-  //     const docUser = await getDoc(docRef);
-  //     console.log(docUser.data(), docUser.id);
-  //     setUserInfo(docUser.data());
-  //     console.log(userInfo);
-  //   })();
-  // }, []);
+  }, [isEditOpen, file]);
 
   // edit modal
   const openEditModal = () => {
@@ -81,6 +74,53 @@ const ProfilePage = () => {
 
   // end of appointment modal
 
+  // adding img to doc
+
+  useEffect(() => {
+    const updateProfile = async (downloadURL) => {
+      if (user) {
+        const docRef = doc(db, "users", user.uid);
+        await updateDoc(docRef, { photoURL: downloadURL });
+        console.log(docRef);
+      }
+    };
+
+    const uploadFile = () => {
+      const name = new Date().getTime() + file.name; //used to avoid same name
+      const storageRef = ref(storage, file.name); // taken from docs
+      console.log(name);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setPercentage(progress);
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            updateProfile(downloadURL);
+          });
+        }
+      );
+    };
+
+    file && uploadFile();
+  }, [file]);
+
   return (
     <>
       <Navbar />
@@ -90,8 +130,8 @@ const ProfilePage = () => {
             <img
               className="profile__image"
               src={
-                file
-                  ? URL.createObjectURL(file)
+                userInfo.photoURL
+                  ? /*URL.createObjectURL(file)*/ userInfo.photoURL
                   : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
               }
               alt="profile picture"

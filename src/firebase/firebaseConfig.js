@@ -1,9 +1,9 @@
-import { initializeApp } from 'firebase/app'; // V9
+import { initializeApp } from "firebase/app"; // V9
 import {
   getAuth,
   createUserWithEmailAndPassword, // BUILT-IN SIGNUP
   signInWithEmailAndPassword, // BUILT-IN LOGIN
-} from 'firebase/auth'; // V9
+} from "firebase/auth"; // V9
 
 import {
   serverTimestamp,
@@ -14,7 +14,8 @@ import {
   doc,
   setDoc,
   updateDoc,
-} from 'firebase/firestore';
+} from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -34,7 +35,7 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 const db = getFirestore(); //if doesnt work add\remove app not as parameter it crashes not finding firebase...
-
+export const storage = getStorage(app); //added for image uploading
 export default app;
 
 export {
