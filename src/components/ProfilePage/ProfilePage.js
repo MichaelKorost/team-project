@@ -19,7 +19,7 @@ import { AuthContext } from "../../AuthContext";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
 
-// TODO: make pfp rerender on upload
+// TODO: view appointment details, userInfo.appointment
 const ProfilePage = () => {
   const {
     dateString,
@@ -39,9 +39,6 @@ const ProfilePage = () => {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   // uploading img
   const [percentage, setPercentage] = useState(null);
-  const [photoURL, setPhotoURL] = useState(
-    "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
-  );
   // getting document
   const [userInfo, setUserInfo] = useState({});
 
