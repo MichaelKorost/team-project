@@ -187,7 +187,7 @@ export default function ProfileForm({ onCloseModal }) {
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DesktopDatePicker
-          label={userProfile.age ? "I was born at" : "Date of birth"}
+          label={userProfile.dob ? "I was born at" : "Date of birth"}
           inputFormat="MM/DD/YYYY"
           value={dateValue}
           onChange={(date) => dateInputHandle(date)}
