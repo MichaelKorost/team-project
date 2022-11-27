@@ -8,6 +8,9 @@ import AppointmentModal from '../Modals/AppointmentModal/AppointmentModal';
 import DonateDetailsModal from '../Modals/DonateDetailsModal/DonateDetailsModal';
 import { AppointmentContext } from '../../contexts/AppointmentContext';
 import { useNavigate } from 'react-router-dom';
+import HospitalMap from '../HospitalMap/HospitalMap';
+import { AuthContext } from '../../AuthContext';
+
 
 // TODO: local storage date and time, so refresh wont reload appointment
 // TODO: appnt saved into db or localStorage and is init val to date string
@@ -26,6 +29,8 @@ const DonatePage = () => {
     confirmedDate,
     setConfirmedDate,
   } = useContext(AppointmentContext);
+
+  const {user} = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -124,13 +129,17 @@ const DonatePage = () => {
               <h1 className='appointment__title'>
                 {confirmedDate + ' AT ' + timeString}
               </h1>
-              <div className='appointment__location'></div>
+              <div className='appointment__location'>
+                <HospitalMap addresses={{origin: user?.address || "Hahistadrut 212, Haifa, Israel", destination: "Ichilov hospital, Tel Aviv, Israel"}} />
+              </div>
               <Button onClick={profileButtonHandler}>Go to profile</Button>
             </>
           ) : (
             <>
               <h1 className='appointment__title'>No Appointment set, yet.</h1>
-              <div className='appointment__location'></div>
+              <div className='appointment__location'>
+                <HospitalMap addresses={{origin: user?.address || "Hahistadrut 212, Haifa, Israel", destination: "Ichilov hospital, Tel Aviv, Israel"}} />
+              </div>
             </>
           )}
         </section>
