@@ -9,7 +9,6 @@ import DonateDetailsModal from '../Modals/DonateDetailsModal/DonateDetailsModal'
 import { AppointmentContext } from '../../contexts/AppointmentContext';
 import { useNavigate } from 'react-router-dom';
 import HospitalMap from '../HospitalMap/HospitalMap';
-import { AuthContext } from '../../AuthContext';
 
 
 // TODO: local storage date and time, so refresh wont reload appointment
@@ -30,14 +29,13 @@ const DonatePage = () => {
     setConfirmedDate,
   } = useContext(AppointmentContext);
 
-  const {user} = useContext(AuthContext);
-
   const navigate = useNavigate();
 
   const [selectedDate, SetSelectedDate] = useState('');
   const [time, setTime] = useState(null);
   const [isDateValid, setIsDateValid] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [hospitalName, setHospitalName] = useState("*hospital name*"); // using useState here to pass down setHospitalName to HospitalMap. only going down 1lvl so i guess it's pretty pointless to use context just for that...
   // view appointment details button
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
@@ -99,7 +97,7 @@ const DonatePage = () => {
           {!isConfirmed ? (
             <>
               <h1 className='donate__title'>
-                Available dates at *hospital name*.
+                Available dates at {hospitalName}.
               </h1>
               <Calendar onCalenderSelect={calendarSelectedDate} />
               <TimeInput onTimeSelect={timeSelect} />
@@ -130,7 +128,7 @@ const DonatePage = () => {
                 {confirmedDate + ' AT ' + timeString}
               </h1>
               <div className='appointment__location'>
-                <HospitalMap addresses={{origin: user?.address || "Hahistadrut 212, Haifa, Israel", destination: "Ichilov hospital, Tel Aviv, Israel"}} />
+                <HospitalMap setHospitalName={setHospitalName} />
               </div>
               <Button onClick={profileButtonHandler}>Go to profile</Button>
             </>
@@ -138,7 +136,7 @@ const DonatePage = () => {
             <>
               <h1 className='appointment__title'>No Appointment set, yet.</h1>
               <div className='appointment__location'>
-                <HospitalMap addresses={{origin: user?.address || "Hahistadrut 212, Haifa, Israel", destination: "Ichilov hospital, Tel Aviv, Israel"}} />
+                <HospitalMap setHospitalName={setHospitalName} />
               </div>
             </>
           )}

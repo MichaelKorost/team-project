@@ -22,6 +22,8 @@ export async function fetchAddress(address) {
 	}
 }
 
+// fetch coordinates of origin and destination (===DEPRECATED===)
+// deprecation reason: this function was only used for testing where the values have been hard-coded. not necessary for the final product
 export async function fetchOriginAndDestination(addresses) {
 	try {
 		const {origin, destination} = addresses;
@@ -33,28 +35,29 @@ export async function fetchOriginAndDestination(addresses) {
 	}
 }
 
-export async function fetchRoute(coors) {
+
+/* hospital finder */
+
+// find hospital closest to coor
+export async function fetchNearestHospital(coor) {
 	try {
-		const req = await fetch(`https://routing.openstreetmap.de/routed-car/route/v1/driving/${coors.map(coor => coor.join(",")).join(";")}?overview=false&geometries=polyline&steps=true`);
-		const json = await req.json();
-		if (json.code !== "Ok") {
-			throw new Error("code status not Ok");
-		}
-		return json.routes[0].legs[0];
+		const nearbyHospitals = await fetchNearbyHospitals(coor);
+		const nearestHospital = findNearestHospital(nearbyHospitals);
+		return nearestHospital;
 	} catch (err) {
-		console.erroror("fetchRoute :: fetch error", {coors}, err);
+		console.error("fetchNearestHospital :: fetch error", {coor}, err);
 		return null;
 	}
 }
 
-// find hospitals near my area, return the nearest one
+// find hospitals near my area, return features array
 export async function fetchNearbyHospitals(coor) {
 	try {
 		const req = await fetch(`https://api.geoapify.com/v2/places?categories=healthcare.hospital&bias=proximity:${coor.join(",")}&limit=20&apiKey=${placesApiKey}`);
 		const json = await req.json();
 		return json.features;
 	} catch (err) {
-		console.erroror("fetchNearbyHospitals :: fetch error", {coor}, err);
+		console.error("fetchNearbyHospitals :: fetch error", {coor}, err);
 		return null;
 	}
 }
@@ -65,6 +68,24 @@ export function findNearestHospital(hosptalList) {
 		return hosptalList.reduce((nominee, curr) => curr.properties.distance < nominee.properties.distance ? curr : nominee);
 	} catch (err) {
 		console.error("findNearestHospital :: issue finding the nearest hospital. please check input", {hosptalList});
+	}
+}
+
+
+/* route finder */
+
+// fetch rotue data between 2 coordinates
+export async function fetchRoute(coors) {
+	try {
+		const req = await fetch(`https://routing.openstreetmap.de/routed-car/route/v1/driving/${coors.map(coor => coor.join(",")).join(";")}?overview=false&geometries=polyline&steps=true`);
+		const json = await req.json();
+		if (json.code !== "Ok") {
+			throw new Error("code status not Ok");
+		}
+		return json.routes[0].legs[0];
+	} catch (err) {
+		console.error("fetchRoute :: fetch error", {coors}, err);
+		return null;
 	}
 }
 
@@ -118,4 +139,12 @@ export function stepsToPoints(steps) {
 		coors.push(...decoded);
 	});
 	return coors;
+}
+
+
+/* miscellaneous */
+
+// calculate zoom from distance (0=entire map, 19=max zoom)
+export function calcZoom(distance) {
+	return Math.min(Math.ceil(-Math.log2(distance / 40000000)), 19) - 2;
 }
