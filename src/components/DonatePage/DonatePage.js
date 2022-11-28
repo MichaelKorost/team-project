@@ -56,6 +56,14 @@ const DonatePage = () => {
   };
   //   end if appointment details
 
+  // useEffect(() => {
+  //   if (!userInfo.bloodType) {
+  //     navigate("/");
+  //     return;
+  //   }
+  //   return;
+  // }, []);
+
   const updateProfile = async (confirmedAppointment) => {
     if (user) {
       const docRef = doc(db, "users", user.uid);

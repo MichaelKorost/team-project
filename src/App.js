@@ -1,30 +1,31 @@
-import './App.css';
-import LoginForm from './components/Login/LoginForm';
-import HomePage from './components/HomePage/HomePage';
-import ProfilePage from './components/ProfilePage/ProfilePage';
-import DonatePage from './components/DonatePage/DonatePage';
-import Dashboard from './components/Dashboard/Dashboard';
-import PageNotFound from './components/PageNotFound/PageNotFound';
-import { Route, Routes } from 'react-router-dom';
-import RequireAuth from './components/RequireAuth/RequireAuth';
-import LoggedInWrapper from './components/LoggedWrapper/LoggedWrapper';
-import LoadingPage from './components/LoadingPage/LoadingPage';
+import "./App.css";
+import LoginForm from "./components/Login/LoginForm";
+import HomePage from "./components/HomePage/HomePage";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
+import DonatePage from "./components/DonatePage/DonatePage";
+import Dashboard from "./components/Dashboard/Dashboard";
+import PageNotFound from "./components/PageNotFound/PageNotFound";
+import { Route, Routes } from "react-router-dom";
+import RequireAuth from "./components/RequireAuth/RequireAuth";
+import LoggedInWrapper from "./components/LoggedWrapper/LoggedWrapper";
+import LoadingPage from "./components/LoadingPage/LoadingPage";
+import RequireProfile from "./components/RequireAuth/requireProfile";
 
 function App() {
   return (
-    <div className='App'>
+    <div className="App">
       <Routes>
         <Route
-          path='/login'
+          path="/login"
           element={
             <LoggedInWrapper>
               <LoginForm />
             </LoggedInWrapper>
           }
         />
-        <Route path='/' element={<RequireAuth>{<HomePage />}</RequireAuth>} />
+        <Route path="/" element={<RequireAuth>{<HomePage />}</RequireAuth>} />
         <Route
-          path='/profile'
+          path="/profile"
           element={
             <RequireAuth>
               <ProfilePage />
@@ -32,22 +33,24 @@ function App() {
           }
         />
         <Route
-          path='/donate'
+          path="/donate"
           element={
             <RequireAuth>
-              <DonatePage />
+              <RequireProfile>
+                <DonatePage />
+              </RequireProfile>
             </RequireAuth>
           }
         />
         <Route
-          path='/admin'
+          path="/admin"
           element={
             <RequireAuth>
               <Dashboard />
             </RequireAuth>
           }
         />
-        <Route path='*' element={<PageNotFound />} />
+        <Route path="*" element={<PageNotFound />} />
         {/* <Route path='*' element={<LoadingPage />} /> */}
       </Routes>
     </div>

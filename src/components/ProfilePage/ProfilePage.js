@@ -30,12 +30,14 @@ const ProfilePage = () => {
     setIsConfirmed,
     confirmedDate,
     setConfirmedDate,
+    isEditOpen,
+    setIsEditOpen,
   } = useContext(AppointmentContext);
 
   const { user } = useContext(AuthContext);
 
   const [file, setFile] = useState("");
-  const [isEditOpen, setIsEditOpen] = useState(false);
+  // const [isEditOpen, setIsEditOpen] = useState(false); //moving to ctx because of navbar
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   // uploading img
   const [percentage, setPercentage] = useState(null);

@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -14,6 +14,10 @@ import ListItemText from "@mui/material/ListItemText";
 import Drawer from "@mui/material/Drawer";
 import Logo from "../../images/Logo.png";
 import { AuthContext } from "../../AuthContext";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
+import MissingProfileModal from "../Modals/MissingProfileModal/MissingProfileModal";
+import { AppointmentContext } from "../../contexts/AppointmentContext";
 // import Typography from '@mui/material/Typography';
 // import Menu from '@mui/material/Menu';
 // import Avatar from '@mui/material/Avatar';
@@ -24,14 +28,14 @@ import { AuthContext } from "../../AuthContext";
 
 const pages = [
   {
+    text: "Home",
+    to: "/",
+  },
+  {
     text: "Admin",
     to: "/admin",
   },
 
-  {
-    text: "Donate",
-    to: "/donate",
-  },
   {
     text: "Profile",
     to: "/profile",
@@ -43,12 +47,42 @@ function ResponsiveAppBar() {
   // const [anchorElUser, setAnchorElUser] = useState(null);
   // these are never used
   const [menuState, setMenuState] = useState(false);
-
+  const [userInfo, setUserInfo] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, logout } = useContext(AuthContext);
+  const { isEditOpen, setIsEditOpen } = useContext(AppointmentContext);
+  const navigate = useNavigate();
 
   const logoutHandler = async () => {
     await logout();
   };
+
+  const onOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const onCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const donateHandler = () => {
+    if (userInfo.bloodType) {
+      console.log("navigating");
+      navigate("/donate");
+      return;
+    }
+    onOpenModal();
+    console.log("opening modal");
+  };
+
+  useEffect(() => {
+    return async () => {
+      const docRef = doc(db, "users", user.uid);
+      const docUser = await getDoc(docRef);
+      console.log(docUser.data());
+      setUserInfo(docUser.data());
+    };
+  }, [isEditOpen]);
 
   return (
     <>
@@ -87,6 +121,14 @@ function ResponsiveAppBar() {
                       </ListItem>
                     );
                   })}
+                  <ListItem disablePadding key={"Donate"}>
+                    <ListItemButton component={"a"}>
+                      <ListItemText
+                        primary={"Donate"}
+                        onClick={donateHandler}
+                      />
+                    </ListItemButton>
+                  </ListItem>
                   <ListItem disablePadding key={"logout"}>
                     <ListItemButton component={Link} to={"/login"}>
                       <ListItemText
@@ -128,6 +170,14 @@ function ResponsiveAppBar() {
               <Button
                 // key={index}
                 sx={{ my: 2, color: "white", display: "block" }}
+                onClick={donateHandler}
+                component={"a"}
+              >
+                {"Donate"}
+              </Button>
+              <Button
+                // key={index}
+                sx={{ my: 2, color: "white", display: "block" }}
                 onClick={logoutHandler}
                 component={Link}
                 to={"/login"}
@@ -138,6 +188,11 @@ function ResponsiveAppBar() {
           </Toolbar>
         </Container>
       </AppBar>
+      <MissingProfileModal
+        onOpenModal={onOpenModal}
+        onCloseModal={onCloseModal}
+        isModalOpen={isModalOpen}
+      />
     </>
   );
 }

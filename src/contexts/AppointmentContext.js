@@ -8,6 +8,7 @@ export const AppointmentProvider = ({ children }) => {
   const [isConfirmed, setIsConfirmed] = useState(false); //ctx
   const [confirmedDate, setConfirmedDate] = useState(""); //ctx
   const [hospitalName, setHospitalName] = useState("*hospital name*"); // using useState here to pass down setHospitalName to HospitalMap. only going down 1lvl so i guess it's pretty pointless to use context just for that...
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const value = {
     dateString,
     setDateString,
@@ -19,6 +20,8 @@ export const AppointmentProvider = ({ children }) => {
     setConfirmedDate,
     hospitalName,
     setHospitalName,
+    isEditOpen,
+    setIsEditOpen,
   };
   return (
     <AppointmentContext.Provider value={value}>
