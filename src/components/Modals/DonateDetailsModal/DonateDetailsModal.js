@@ -8,6 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
+import HospitalMap from "../../HospitalMap/HospitalMap";
 
 const DonateDetailsModal = ({
   isOpen,
@@ -46,7 +47,9 @@ const DonateDetailsModal = ({
                 </div>
               </section>
               <section className="details__map-container">
-                <div className="temp-map">map placeholder</div>
+                <div className="temp-map">
+                  <HospitalMap />
+                </div>
               </section>
             </div>
           </DialogContent>
