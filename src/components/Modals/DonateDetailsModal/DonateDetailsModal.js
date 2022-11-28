@@ -7,10 +7,27 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import HospitalMap from "../../HospitalMap/HospitalMap";
+import { AppointmentContext } from "../../../contexts/AppointmentContext";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase/firebaseConfig";
+import { AuthContext } from "../../../AuthContext";
 
-const DonateDetailsModal = ({ isOpen, onCloseModal, confirmedDate }) => {
+const DonateDetailsModal = ({ isOpen, onCloseModal }) => {
+  // TODO: replace confirmedDate with userIndo.appointment
+  const [userInfo, setUserInfo] = useState({});
+  const { user } = useContext(AuthContext);
+  const { hospitalName } = useContext(AppointmentContext);
+
+  useEffect(() => {
+    return async () => {
+      const docRef = doc(db, "users", user.uid);
+      const docUser = await getDoc(docRef);
+      setUserInfo(docUser.data());
+    };
+  }, []);
+
   const handleClose = () => {
     onCloseModal();
   };
@@ -32,11 +49,11 @@ const DonateDetailsModal = ({ isOpen, onCloseModal, confirmedDate }) => {
               <section className="details-box">
                 <div className="details-main__info-box">
                   <p className="details-main__question">When:</p>
-                  <p className="details-main__answer">{confirmedDate}</p>
+                  <p className="details-main__answer">{userInfo.appointment}</p>
                 </div>
                 <div className="details-main__info-box">
                   <p className="details-main__question">Where:</p>
-                  <p className="details-main__answer">hospital</p>
+                  <p className="details-main__answer">{hospitalName}</p>
                 </div>
               </section>
               <section className="details__map-container">
