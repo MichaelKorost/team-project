@@ -28,7 +28,7 @@ export default function ProfileForm({ onCloseModal }) {
   const [locationErrMsg, setLocationErrMsg] = useState(
     'Location should be more than 1 character'
   );
-  const [phoneNumberValue, setPhoneNumberValue] = useState('');
+  // const [phoneNumberValue, setPhoneNumberValue] = useState('');
   const [phoneNumberValid, setPhoneNumberValid] = useState(false);
   const [phoneNumberErrMsg, setPhoneNumberErrMsg] = useState(
     'Phone number should be at least 9 digits'
@@ -72,6 +72,7 @@ export default function ProfileForm({ onCloseModal }) {
   };
 
   const phoneNumberInputHandler = (e) => {
+    // kinda worked but replaced value takes up length for one time->doesnt work
     // const res = e.target.value.replace(/\D/g, '');
     // setPhoneNumberValue(res);
     isPhoneNumberValid(e.target.value);
@@ -127,10 +128,10 @@ export default function ProfileForm({ onCloseModal }) {
       setLastNameErrMsg('Last name should be more than 1 character');
       return SetLastNameValid(false);
     }
-    if (String(str).includes(' ')) {
-      setLastNameErrMsg('Last name should not include spaces');
-      return SetLastNameValid(false);
-    }
+    // if (String(str).includes(' ')) {
+    //   setLastNameErrMsg('Last name should not include spaces');
+    //   return SetLastNameValid(false);
+    // } some last names include spaces....
     if (!/^[a-zA-Z]+$/.test(str)) {
       setLastNameErrMsg(
         'Last name should not include numbers and symbols or spaces'
@@ -163,7 +164,6 @@ export default function ProfileForm({ onCloseModal }) {
       setPhoneNumberErrMsg('Phone number length should be 9 digits');
       return setPhoneNumberValid(false);
     }
-
     setPhoneNumberErrMsg('');
     setPhoneNumberValid(true);
   };
