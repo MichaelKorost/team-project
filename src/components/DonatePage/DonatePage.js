@@ -1,3 +1,22 @@
+import './DonatePage.css';
+import ResponsiveAppBar from '../Navbar/Navbar';
+import Calendar from '../Calendar/Calender';
+import { useContext, useEffect, useState } from 'react';
+import TimeInput from '../TimeInput/TimeInput';
+import { Button } from '@mui/material';
+import AppointmentModal from '../Modals/AppointmentModal/AppointmentModal';
+import DonateDetailsModal from '../Modals/DonateDetailsModal/DonateDetailsModal';
+import { AppointmentContext } from '../../contexts/AppointmentContext';
+import { useNavigate } from 'react-router-dom';
+import HospitalMap from '../HospitalMap/HospitalMap';
+
+
+// TODO: local storage date and time, so refresh wont reload appointment
+// TODO: appnt saved into db or localStorage and is init val to date string
+// TODO: add view donation details modal
+// TODO: add navigation to back button
+// TODO: add edit button for the chosen date
+
 import "./DonatePage.css";
 import ResponsiveAppBar from "../Navbar/Navbar";
 import Calendar from "../Calendar/Calender";
@@ -36,6 +55,8 @@ const DonatePage = () => {
   const [time, setTime] = useState(null);
   const [isDateValid, setIsDateValid] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [hospitalName, setHospitalName] = useState("*hospital name*"); // using useState here to pass down setHospitalName to HospitalMap. only going down 1lvl so i guess it's pretty pointless to use context just for that...
+  // view appointment details button
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [userInfo, setUserInfo] = useState({});
 
@@ -127,8 +148,8 @@ const DonatePage = () => {
         <section className="donate-left-pane">
           {!userInfo.appointment ? (
             <>
-              <h1 className="donate__title">
-                Available dates at *hospital name*.
+              <h1 className='donate__title'>
+                Available dates at {hospitalName}.
               </h1>
               <Calendar onCalenderSelect={calendarSelectedDate} />
               <TimeInput onTimeSelect={timeSelect} />
@@ -155,6 +176,26 @@ const DonatePage = () => {
                 Cancel
               </Button>
             </div>
+          )}
+        </section>
+        <section className='donate-right-pane'>
+          {isConfirmed ? (
+            <>
+              <h1 className='appointment__title'>
+                {confirmedDate + ' AT ' + timeString}
+              </h1>
+              <div className='appointment__location'>
+                <HospitalMap setHospitalName={setHospitalName} />
+              </div>
+              <Button onClick={profileButtonHandler}>Go to profile</Button>
+            </>
+          ) : (
+            <>
+              <h1 className='appointment__title'>No Appointment set, yet.</h1>
+              <div className='appointment__location'>
+                <HospitalMap setHospitalName={setHospitalName} />
+              </div>
+            </>
           )}
         </section>
         {userInfo.appointment && (
