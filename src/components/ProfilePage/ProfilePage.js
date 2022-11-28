@@ -40,7 +40,7 @@ const ProfilePage = () => {
   // uploading img
   const [percentage, setPercentage] = useState(null);
   // getting document
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({}); //used to get user properties
 
   useEffect(() => {
     return async () => {
@@ -152,7 +152,7 @@ const ProfilePage = () => {
             </Button>
           </div>
           <Button
-            disabled={!isConfirmed}
+            disabled={!userInfo.appointment}
             onClick={openDetailsModal}
             variant="contained"
             className="profile__appointment-button"
@@ -218,7 +218,7 @@ const ProfilePage = () => {
       <DonateDetailsModal
         isOpen={isDetailsOpen}
         onCloseModal={closeDetailsModal}
-        confirmedDate={confirmedDate}
+        confirmedDate={userInfo?.appointment}
         timeString={timeString}
         onOpenModal={openDetailsModal}
       />
