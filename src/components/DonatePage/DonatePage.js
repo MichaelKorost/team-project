@@ -1,14 +1,14 @@
-import './DonatePage.css';
-import ResponsiveAppBar from '../Navbar/Navbar';
-import Calendar from '../Calendar/Calender';
-import { useContext, useEffect, useState } from 'react';
-import TimeInput from '../TimeInput/TimeInput';
-import { Button } from '@mui/material';
-import AppointmentModal from '../Modals/AppointmentModal/AppointmentModal';
-import DonateDetailsModal from '../Modals/DonateDetailsModal/DonateDetailsModal';
-import { AppointmentContext } from '../../contexts/AppointmentContext';
-import { useNavigate } from 'react-router-dom';
-import HospitalMap from '../HospitalMap/HospitalMap';
+import "./DonatePage.css";
+import ResponsiveAppBar from "../Navbar/Navbar";
+import Calendar from "../Calendar/Calender";
+import { useContext, useEffect, useState } from "react";
+import TimeInput from "../TimeInput/TimeInput";
+import { Button } from "@mui/material";
+import AppointmentModal from "../Modals/AppointmentModal/AppointmentModal";
+import DonateDetailsModal from "../Modals/DonateDetailsModal/DonateDetailsModal";
+import { AppointmentContext } from "../../contexts/AppointmentContext";
+import { useNavigate } from "react-router-dom";
+import HospitalMap from "../HospitalMap/HospitalMap";
 import { AuthContext } from "../../AuthContext";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
@@ -29,6 +29,8 @@ const DonatePage = () => {
     setIsConfirmed,
     confirmedDate,
     setConfirmedDate,
+    hospitalName,
+    setHospitalName,
   } = useContext(AppointmentContext);
 
   const navigate = useNavigate();
@@ -37,7 +39,7 @@ const DonatePage = () => {
   const [time, setTime] = useState(null);
   const [isDateValid, setIsDateValid] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [hospitalName, setHospitalName] = useState("*hospital name*"); // using useState here to pass down setHospitalName to HospitalMap. only going down 1lvl so i guess it's pretty pointless to use context just for that...
+
   // view appointment details button
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [userInfo, setUserInfo] = useState({});
@@ -68,6 +70,7 @@ const DonatePage = () => {
 
   const cancelHandler = () => {
     updateProfile(null);
+    setHospitalName(""); //tempfix
   };
 
   useEffect(() => {
@@ -130,7 +133,7 @@ const DonatePage = () => {
         <section className="donate-left-pane">
           {!userInfo.appointment ? (
             <>
-              <h1 className='donate__title'>
+              <h1 className="donate__title">
                 Available dates at {hospitalName}.
               </h1>
               <Calendar onCalenderSelect={calendarSelectedDate} />
@@ -160,7 +163,7 @@ const DonatePage = () => {
             </div>
           )}
         </section>
-        <section className='donate-right-pane'>
+        {/* <section className='donate-right-pane'>
           {isConfirmed ? (
             <>
               <h1 className='appointment__title'>
@@ -179,7 +182,7 @@ const DonatePage = () => {
               </div>
             </>
           )}
-        </section>
+        </section> */}
         {userInfo.appointment && (
           <section className="donate-right-pane">
             {userInfo.appointment ? (
@@ -188,13 +191,17 @@ const DonatePage = () => {
                   {/* {confirmedDate + " AT " + timeString} */}
                   {userInfo?.appointment || ""}
                 </h1>
-                <div className="appointment__location"></div>
+                <div className="appointment__location">
+                  <HospitalMap setHospitalName={setHospitalName} />
+                </div>
                 <Button onClick={profileButtonHandler}>Go to profile</Button>
               </>
             ) : (
               <>
                 <h1 className="appointment__title">No Appointment set, yet.</h1>
-                <div className="appointment__location"></div>
+                <div className="appointment__location">
+                  <HospitalMap setHospitalName={setHospitalName} />
+                </div>
               </>
             )}
           </section>
