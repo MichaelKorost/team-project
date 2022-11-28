@@ -15,7 +15,6 @@ import { db } from "../../../firebase/firebaseConfig";
 import { AuthContext } from "../../../AuthContext";
 
 const DonateDetailsModal = ({ isOpen, onCloseModal }) => {
-  // TODO: replace confirmedDate with userIndo.appointment
   const [userInfo, setUserInfo] = useState({});
   const { user } = useContext(AuthContext);
   const { hospitalName } = useContext(AppointmentContext);
