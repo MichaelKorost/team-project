@@ -1,0 +1,8 @@
+.missingProfile__actions {
+  display: flex;
+  gap: 40px;
+}
+
+.missingProfile-actions__link {
+  text-decoration: none;
+}

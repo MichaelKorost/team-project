@@ -8,10 +8,13 @@ import { AuthContext } from "../../AuthContext";
 import { async } from "@firebase/util";
 import { db } from "../../firebase/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
+import MissingProfileModal from "../Modals/MissingProfileModal/MissingProfileModal";
 // import { useContext } from 'react';
 
 const HomePage = () => {
   const [userInfo, setUserInfo] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { user } = useContext(AuthContext);
   // TODO: if profile not filled button pop up modal - please complete profile
   const navigate = useNavigate();
@@ -25,12 +28,22 @@ const HomePage = () => {
     };
   }, []);
 
+  const onOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const onCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   const buttonClickHandler = () => {
     if (userInfo.bloodType) {
       navigate("/donate");
+      return;
     }
-    console.log("missing profile information, Please update profile");
+    onOpenModal();
   };
+
   return (
     <>
       <Navbar />
@@ -50,6 +63,12 @@ const HomePage = () => {
           </button>
         </div>
       </div>
+
+      <MissingProfileModal
+        onOpenModal={onOpenModal}
+        onCloseModal={onCloseModal}
+        isModalOpen={isModalOpen}
+      />
     </>
   );
 };
