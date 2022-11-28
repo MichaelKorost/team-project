@@ -6,8 +6,7 @@ import LoadingPage from "../LoadingPage/LoadingPage";
 // import { useContext } from 'react';
 
 const HomePage = () => {
-  // const { isLoading } = useContext(AuthContext);
-  // if (isLoading) return <LoadingPage />;
+  // TODO: if profile not filled button pop up modal - please complete profile
 
   return (
     <>

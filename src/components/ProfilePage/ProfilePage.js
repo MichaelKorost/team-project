@@ -219,7 +219,6 @@ const ProfilePage = () => {
         isOpen={isDetailsOpen}
         onCloseModal={closeDetailsModal}
         confirmedDate={userInfo?.appointment}
-        timeString={timeString}
         onOpenModal={openDetailsModal}
       />
     </>
