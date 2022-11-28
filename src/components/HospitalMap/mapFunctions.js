@@ -7,7 +7,8 @@ export async function fetchUserAddressFromSettings(user) {
 	try {
 		const docRef = doc(db, "users", user.uid);
 		const docUser = await getDoc(docRef);
-		return docUser?.address ?? (console.warn("fetchUserAddressFromSettings :: could not find a defined user address. using fallback location instead") || fallbackAddress);
+		const data = docUser.data();
+		return data?.location ?? (console.warn("fetchUserAddressFromSettings :: could not find a defined user address. using fallback location instead") || fallbackAddress);
 	} catch (err) {
 		console.error("fetchUserAddressFromSettings ::  fetch error", err);
 		return null;
