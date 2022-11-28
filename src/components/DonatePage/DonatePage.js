@@ -130,59 +130,26 @@ const DonatePage = () => {
     <>
       <ResponsiveAppBar />
       <div className="donate-page-page">
-        <section className="donate-left-pane">
-          {!userInfo.appointment ? (
-            <>
-              <h1 className="donate__title">
-                Available dates at {hospitalName}.
-              </h1>
-              <Calendar onCalenderSelect={calendarSelectedDate} />
-              <TimeInput onTimeSelect={timeSelect} />
-              <Button
-                disabled={!isDateValid}
-                variant="text"
-                className="donate__button"
-                onClick={openModal}
-              >
-                Set appointment
-              </Button>
-            </>
-          ) : (
-            <div className="donate__confirm-message">
-              <h1>An Appointment was set successfully!</h1>
-              <Button
-                variant="contained"
-                className="donate__confirm-button"
-                onClick={openDetailsModal}
-              >
-                view Appointment Details
-              </Button>
-              <Button variant="text" onClick={cancelHandler}>
-                Cancel
-              </Button>
-            </div>
-          )}
-        </section>
-        {/* <section className='donate-right-pane'>
-          {isConfirmed ? (
-            <>
-              <h1 className='appointment__title'>
-                {confirmedDate + ' AT ' + timeString}
-              </h1>
-              <div className='appointment__location'>
-                <HospitalMap setHospitalName={setHospitalName} />
-              </div>
-              <Button onClick={profileButtonHandler}>Go to profile</Button>
-            </>
-          ) : (
-            <>
-              <h1 className='appointment__title'>No Appointment set, yet.</h1>
-              <div className='appointment__location'>
-                <HospitalMap setHospitalName={setHospitalName} />
-              </div>
-            </>
-          )}
-        </section> */}
+        {!userInfo.appointment && (
+          <section className="donate-left-pane">
+            {
+              <>
+                <h1 className="donate__title">Please choose date</h1>
+                <Calendar onCalenderSelect={calendarSelectedDate} />
+                <TimeInput onTimeSelect={timeSelect} />
+                <Button
+                  disabled={!isDateValid}
+                  variant="text"
+                  className="donate__button"
+                  onClick={openModal}
+                >
+                  Set appointment
+                </Button>
+              </>
+            }
+          </section>
+        )}
+
         {userInfo.appointment && (
           <section className="donate-right-pane">
             {userInfo.appointment ? (
@@ -194,7 +161,14 @@ const DonatePage = () => {
                 <div className="appointment__location">
                   <HospitalMap setHospitalName={setHospitalName} />
                 </div>
-                <Button onClick={profileButtonHandler}>Go to profile</Button>
+                <div className="appointment__actions">
+                  <Button variant="contained" onClick={profileButtonHandler}>
+                    Go to profile
+                  </Button>
+                  <Button variant="text" onClick={cancelHandler}>
+                    Cancel Appointment
+                  </Button>
+                </div>
               </>
             ) : (
               <>
