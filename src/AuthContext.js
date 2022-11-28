@@ -4,17 +4,14 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-
-  updateProfile,
-} from "firebase/auth";
+} from 'firebase/auth';
 import {
   auth,
   db,
   doc,
   serverTimestamp,
   setDoc,
-} from "./firebase/firebaseConfig";
-
+} from './firebase/firebaseConfig';
 
 export const AuthContext = createContext();
 
@@ -27,14 +24,14 @@ export function AuthProvider({ children }) {
   const register = async (email, password) => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(db, "users", res.user.uid), {
+      await setDoc(doc(db, 'users', res.user.uid), {
         email: email,
         firstName: null,
         lastName: null,
         dob: null,
         bloodType: null,
         phoneNumber: null,
-        bloodType: null,
+        location: null,
         hmo: null,
         photoURL: null,
         appointment: null,
@@ -79,7 +76,6 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-
       value={{
         user,
         register,
@@ -87,9 +83,7 @@ export function AuthProvider({ children }) {
         logout,
         isLoading,
         setIsLoading,
-      }}
-    >
-
+      }}>
       {children}
     </AuthContext.Provider>
   );
