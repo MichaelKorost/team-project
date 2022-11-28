@@ -1,4 +1,18 @@
+import {doc, getDoc} from "firebase/firestore";
+import {db} from "../../firebase/firebaseConfig";
 import {geocodeApiKey, placesApiKey} from "./tokens";
+
+export async function fetchUserAddressFromSettings(user) {
+	const fallbackAddress = "221b Baker St, London, England" || "10 Downing St, London, England, UK"; // address in case there's no address in the user's data
+	try {
+		const docRef = doc(db, "users", user.uid);
+		const docUser = await getDoc(docRef);
+		return docUser?.address ?? (console.warn("fetchUserAddressFromSettings :: could not find a defined user address. using fallback location instead") || fallbackAddress);
+	} catch (err) {
+		console.error("fetchUserAddressFromSettings ::  fetch error", err);
+		return null;
+	}
+}
 
 export async function fetchAllMatchingAddresses(address) {
 	try {
@@ -146,5 +160,9 @@ export function stepsToPoints(steps) {
 
 // calculate zoom from distance (0=entire map, 19=max zoom)
 export function calcZoom(distance) {
-	return Math.min(Math.ceil(-Math.log2(distance / 40000000)), 19) - 2;
+	// console.log("calcZoom", {distance});
+	// const resolution = 0.5;
+	// const zoom = 20 - Math.round(Math.log2(156412/(distance * resolution)));
+	// return Math.max(Math.min(20, zoom), 0);
+	return 20 - Math.round(Math.log2(156412 / distance));
 }

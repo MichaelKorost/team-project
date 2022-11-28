@@ -1,6 +1,6 @@
 import {useState, useEffect, useContext} from "react";
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
-import {fetchRoute, stepsToPoints, fetchAddress, fetchNearestHospital, calcZoom} from './mapFunctions';
+import {fetchRoute, stepsToPoints, fetchAddress, fetchNearestHospital, calcZoom, fetchUserAddressFromSettings} from './mapFunctions';
 import { AuthContext } from '../../AuthContext';
 
 function HospitalMap({setHospitalName}) {
@@ -10,7 +10,7 @@ function HospitalMap({setHospitalName}) {
 	async function loadMap() {
 		try {
 			// load required data
-			const originAddressName = user.address || "Hazayit 1, Ramat HaSharon, Israel"; // temporary address as a test
+			const originAddressName = await fetchUserAddressFromSettings(user); // temporary address as a test
 			const originAddressCoor = await fetchAddress(originAddressName);
 			const destinationAddressData = await fetchNearestHospital(originAddressCoor);
 			console.log({user});
