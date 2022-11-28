@@ -5,6 +5,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useContext, useState } from "react";
+import { AppointmentContext } from "../../../contexts/AppointmentContext";
+import { updateProfile } from "firebase/auth";
 
 export default function AppointmentModal({
   onOpenModal,
@@ -12,7 +15,10 @@ export default function AppointmentModal({
   onAcceptModal,
   isOpen,
   appointedDate,
+  onUpdateProfile,
 }) {
+  const { timeString, confirmedDate } = useContext(AppointmentContext);
+
   const openModalHandler = () => {
     onOpenModal();
   };
@@ -23,6 +29,9 @@ export default function AppointmentModal({
 
   const modalAccept = () => {
     onAcceptModal();
+    console.log(timeString);
+    console.log(confirmedDate);
+    onUpdateProfile(`${confirmedDate} AT ${timeString}`);
   };
 
   return (

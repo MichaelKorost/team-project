@@ -10,12 +10,7 @@ import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import HospitalMap from "../../HospitalMap/HospitalMap";
 
-const DonateDetailsModal = ({
-  isOpen,
-  onCloseModal,
-  confirmedDate,
-  timeString,
-}) => {
+const DonateDetailsModal = ({ isOpen, onCloseModal, confirmedDate }) => {
   const handleClose = () => {
     onCloseModal();
   };
@@ -37,9 +32,7 @@ const DonateDetailsModal = ({
               <section className="details-box">
                 <div className="details-main__info-box">
                   <p className="details-main__question">When:</p>
-                  <p className="details-main__answer">
-                    {confirmedDate + " AT " + timeString}
-                  </p>
+                  <p className="details-main__answer">{confirmedDate}</p>
                 </div>
                 <div className="details-main__info-box">
                   <p className="details-main__question">Where:</p>
