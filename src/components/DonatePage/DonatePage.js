@@ -9,24 +9,6 @@ import DonateDetailsModal from '../Modals/DonateDetailsModal/DonateDetailsModal'
 import { AppointmentContext } from '../../contexts/AppointmentContext';
 import { useNavigate } from 'react-router-dom';
 import HospitalMap from '../HospitalMap/HospitalMap';
-
-
-// TODO: local storage date and time, so refresh wont reload appointment
-// TODO: appnt saved into db or localStorage and is init val to date string
-// TODO: add view donation details modal
-// TODO: add navigation to back button
-// TODO: add edit button for the chosen date
-
-import "./DonatePage.css";
-import ResponsiveAppBar from "../Navbar/Navbar";
-import Calendar from "../Calendar/Calender";
-import { useContext, useEffect, useState } from "react";
-import TimeInput from "../TimeInput/TimeInput";
-import { Button } from "@mui/material";
-import AppointmentModal from "../Modals/AppointmentModal/AppointmentModal";
-import DonateDetailsModal from "../Modals/DonateDetailsModal/DonateDetailsModal";
-import { AppointmentContext } from "../../contexts/AppointmentContext";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
