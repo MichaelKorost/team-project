@@ -38,9 +38,14 @@
 }
 
 .donate__title {
-  margin: 15px 0 15px;
-  font-size: 20px;
+  /* margin: 15px 0 15px; */
+  padding: 8px;
+  font-size: 25px;
   font-weight: 200;
+  background-color: #ff4756;
+  color: white;
+  border-radius: 4px;
+  max-width: fit-content;
 }
 
 .donate__button {
@@ -56,6 +61,7 @@
   gap: 50px;
   padding: 10px;
 }
+
 .donate__confirm-message h1 {
   margin: 0;
   color: #ff4756;
