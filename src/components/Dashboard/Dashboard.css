@@ -1,3 +1,16 @@
-.css-d8mc5q {
-  height: calc(100vh - 68.5px) !important;
+.dashboard__widgets {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  /* background-color: aqua; */
+  width: 100%;
+  margin: 40px;
+  height: fit-content;
+}
+
+@media (max-width: 899px) {
+  .dashboard__widgets {
+    justify-content: center;
+    margin: 0;
+  }
 }
