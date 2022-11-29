@@ -6,6 +6,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { collection, db } from "../../firebase/firebaseConfig";
 import { getDocs, onSnapshot, query, where } from "firebase/firestore";
+import { Link } from "react-router-dom";
 
 const DashboardWidget = ({ type }) => {
   const [amount, setAmount] = useState(null);
@@ -85,7 +86,9 @@ const DashboardWidget = ({ type }) => {
       <div className="left">
         <span className="widget__title">{data.title}</span>
         <span className="widget__amount">{data.amount}</span>
-        <span className="widget__link">{data.link}</span>
+        <Link className="widget__link" to={"/admin/users"}>
+          {data.link}
+        </Link>
       </div>
       <div className="right">
         <div

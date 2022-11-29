@@ -27,11 +27,23 @@
   color: #ff4756c9;
 }
 .widget__amount {
+  font-size: 28px;
+  font-weight: 300;
 }
+
 .widget__link {
+  width: max-content;
+  font-size: 12px;
+  text-decoration: none;
+  color: black;
+}
+
+.widget__link:hover {
+  border-bottom: 1px solid gray;
 }
 
 .widget__percent {
+  font-size: 14px;
 }
 
 .percentage {
