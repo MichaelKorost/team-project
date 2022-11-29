@@ -6,10 +6,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Button, FormHelperText, InputLabel } from '@mui/material';
+import { Autocomplete, Button, FormHelperText, InputLabel } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import { db, doc, updateDoc } from '../../firebase/firebaseConfig';
 import { AuthContext } from '../../AuthContext';
+import cities from "./cities.json";
 
 export default function ProfileForm({ onCloseModal }) {
   // ----------start states
@@ -28,6 +29,8 @@ export default function ProfileForm({ onCloseModal }) {
   const [locationErrMsg, setLocationErrMsg] = useState(
     'Location should be more than 1 character'
   );
+  const [locationCity, setLocationCity] = useState(null);
+  const [locationStreet, setLocationStreet] = useState(null);
   // const [phoneNumberValue, setPhoneNumberValue] = useState('');
   const [phoneNumberValid, setPhoneNumberValid] = useState(false);
   const [phoneNumberErrMsg, setPhoneNumberErrMsg] = useState(
@@ -69,6 +72,10 @@ export default function ProfileForm({ onCloseModal }) {
     isLocationValid(e.target.value);
     setUserProfile({ ...userProfile, location: e.target.value.toLowerCase() });
     console.log(userProfile);
+  };
+
+  const locationCityInputHandler = (e, newValue) => {
+    setLocationCity(newValue);
   };
 
   const phoneNumberInputHandler = (e) => {
@@ -189,6 +196,11 @@ export default function ProfileForm({ onCloseModal }) {
   //   console.log(user.uid);
   // }, []);
 
+
+  useEffect(() => {
+    console.log({locationCity});
+  }, [locationCity]);
+
   const updateProfile = async () => {
     if (user) {
       const docRef = doc(db, 'users', user.uid);
@@ -223,6 +235,16 @@ export default function ProfileForm({ onCloseModal }) {
         label='Location'
         helperText={locationErrMsg}
         error={!LocationValid}
+      />
+      <Autocomplete
+        options={cities}
+        renderInput={
+          params =>
+            <TextField {...params}
+              label="City"
+            />
+        }
+        onChange={(e, newValue) => locationCityInputHandler(e, newValue)}
       />
       <TextField
         className='form__phone'
