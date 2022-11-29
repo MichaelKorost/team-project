@@ -23,8 +23,8 @@ function Dashboard() {
           <DashboardSidebar anchor={"top"} />
         </Box>
         <div className="dashboard__widgets">
-          <DashboardWidget />
-          <DashboardWidget />
+          <DashboardWidget type={"user"} />
+          <DashboardWidget type={"appointments"} />
         </div>
       </Box>
     </>
