@@ -1,5 +1,7 @@
 .dashboard__content {
   width: calc(100% - 250px);
+  max-height: calc(100vh - 68.5px);
+  overflow: hidden;
 }
 
 .dashboard__widgets {
@@ -12,7 +14,11 @@
 }
 
 .dashboard__chart {
+  display: flex;
   margin: 0 60px;
+  background-color: aquamarine;
+  max-width: 983px;
+  max-height: 450px;
 }
 
 @media (max-width: 899px) {
@@ -25,5 +31,6 @@
   }
   .dashboard__chart {
     margin: 0 20px;
+    justify-content: center;
   }
 }

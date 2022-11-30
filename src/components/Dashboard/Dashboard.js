@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import DashboardSidebar from "../DashboardSidebar/DashboardSidebar";
 import Navbar from "../Navbar/Navbar";
 import DashboardWidget from "../DashboardWidget/DashboardWidget";
+import DashboardChart from "../DashboardChart/DashboardChart";
 
 function Dashboard() {
   return (
@@ -27,7 +28,9 @@ function Dashboard() {
             <DashboardWidget type={"user"} />
             <DashboardWidget type={"appointments"} />
           </div>
-          <div className="dashboard__chart">hi</div>
+          <div className="dashboard__chart">
+            <DashboardChart />
+          </div>
         </div>
       </Box>
     </>
