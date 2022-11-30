@@ -1,16 +1,29 @@
+.dashboard__content {
+  width: calc(100% - 250px);
+}
+
 .dashboard__widgets {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  /* background-color: aqua; */
-  width: 100%;
+  max-width: 100%;
   margin: 40px;
   height: fit-content;
 }
 
+.dashboard__chart {
+  margin: 0 60px;
+}
+
 @media (max-width: 899px) {
+  .dashboard__content {
+    width: 100%;
+  }
   .dashboard__widgets {
     justify-content: center;
     margin: 0;
+  }
+  .dashboard__chart {
+    margin: 0 20px;
   }
 }

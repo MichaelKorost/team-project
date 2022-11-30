@@ -22,9 +22,12 @@ function Dashboard() {
         <Box sx={{ display: { xs: "contents", md: "none" } }}>
           <DashboardSidebar anchor={"top"} />
         </Box>
-        <div className="dashboard__widgets">
-          <DashboardWidget type={"user"} />
-          <DashboardWidget type={"appointments"} />
+        <div className="dashboard__content">
+          <div className="dashboard__widgets">
+            <DashboardWidget type={"user"} />
+            <DashboardWidget type={"appointments"} />
+          </div>
+          <div className="dashboard__chart">hi</div>
         </div>
       </Box>
     </>
