@@ -26,10 +26,8 @@ function HospitalMap({setHospitalName}) {
 			setDestination(coors[1]);
 			setCenter([(coors[0][0] + coors[1][0]) / 2, (coors[0][1] + coors[1][1]) / 2]);
 			setZoom(calcZoom(destinationAddressData.properties.distance));
-			if (setHospitalName instanceof Function) {
-				const ps = destinationAddressData.properties;
-				setHospitalName((ps.name ? ps.name + ", " : "") + ps.formatted);
-			}
+			const ps = destinationAddressData.properties;
+			setHospitalName((ps.name ? ps.name + ", " : "") + ps.formatted);
 			setMapReady(true);
 		} catch (err) {
 			console.error("loadMap :: unable to construct map", {err});
