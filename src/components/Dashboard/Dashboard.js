@@ -3,6 +3,10 @@ import Box from "@mui/material/Box";
 import DashboardSidebar from "../DashboardSidebar/DashboardSidebar";
 import Navbar from "../Navbar/Navbar";
 import DashboardWidget from "../DashboardWidget/DashboardWidget";
+import DashboardChart from "../DashboardChart/DashboardChart";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
+import { useEffect, useState } from "react";
 
 function Dashboard() {
   return (
@@ -22,9 +26,14 @@ function Dashboard() {
         <Box sx={{ display: { xs: "contents", md: "none" } }}>
           <DashboardSidebar anchor={"top"} />
         </Box>
-        <div className="dashboard__widgets">
-          <DashboardWidget type={"user"} />
-          <DashboardWidget type={"appointments"} />
+        <div className="dashboard__content">
+          <div className="dashboard__widgets">
+            <DashboardWidget type={"user"} />
+            <DashboardWidget type={"appointments"} />
+          </div>
+          <div className="dashboard__chart">
+            <DashboardChart />
+          </div>
         </div>
       </Box>
     </>

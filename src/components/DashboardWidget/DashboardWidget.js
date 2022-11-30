@@ -78,7 +78,7 @@ const DashboardWidget = ({ type }) => {
       users.push({ ...doc.data() });
     });
     setAppointments(users.length);
-    console.log(users);
+    // console.log(users);
   });
 
   return (
