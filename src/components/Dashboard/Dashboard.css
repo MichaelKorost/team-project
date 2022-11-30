@@ -15,10 +15,14 @@
 
 .dashboard__chart {
   display: flex;
+  justify-content: center;
   margin: 0 60px;
-  background-color: aquamarine;
   max-width: 983px;
   max-height: 450px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
 @media (max-width: 899px) {

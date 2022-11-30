@@ -4,6 +4,9 @@ import DashboardSidebar from "../DashboardSidebar/DashboardSidebar";
 import Navbar from "../Navbar/Navbar";
 import DashboardWidget from "../DashboardWidget/DashboardWidget";
 import DashboardChart from "../DashboardChart/DashboardChart";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
+import { useEffect, useState } from "react";
 
 function Dashboard() {
   return (
