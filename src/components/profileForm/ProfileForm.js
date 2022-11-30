@@ -29,8 +29,17 @@ export default function ProfileForm({ onCloseModal }) {
   const [locationErrMsg, setLocationErrMsg] = useState(
     'Location should be more than 1 character'
   );
-  const [locationCity, setLocationCity] = useState(null);
-  const [locationStreet, setLocationStreet] = useState(null);
+  const [locationCity, setLocationCity] = useState("");
+  const [locationCityValid, setLocationCityValid] = useState(false);
+  const [locationCityErrMsg, setLocationCityErrMsg] = useState(
+    'Please select a city from the list'
+  );
+  const [locationStreet, setLocationStreet] = useState("");
+  const [locationStreetValid, setLocationStreetValid] = useState(false);
+  const [locationStreetErrMsg, setLocationStreetErrMsg] = useState(
+    'Street address should be more than 1 character long'
+  );
+  const [locationFull, setLocationFull] = useState({city: null, street: null});
   // const [phoneNumberValue, setPhoneNumberValue] = useState('');
   const [phoneNumberValid, setPhoneNumberValid] = useState(false);
   const [phoneNumberErrMsg, setPhoneNumberErrMsg] = useState(
@@ -75,7 +84,17 @@ export default function ProfileForm({ onCloseModal }) {
   };
 
   const locationCityInputHandler = (e, newValue) => {
-    setLocationCity(newValue);
+    const value = newValue;
+    setLocationFull({...locationFull, city: value});
+    isLocationCityValid(value);
+    setUserProfile({ ...userProfile, location: evaluateFullLocation()});
+  };
+
+  const locationStreetInputHandler = (e) => {
+    const value = e.target.value;
+    setLocationFull({...locationFull, street: value});
+    isLocationStreetValid(value);
+    setUserProfile({ ...userProfile, location: evaluateFullLocation()});
   };
 
   const phoneNumberInputHandler = (e) => {
@@ -162,6 +181,33 @@ export default function ProfileForm({ onCloseModal }) {
     return setLocationValid(true);
   };
 
+  const evaluateFullLocation = () => [locationFull.street, locationFull.city, "Israel"].join(", ");
+
+
+  const isLocationCityValid = (str) => {
+    console.log("isLocationCityValid", {str}, {locationFull});
+    // a fixed list so can only be a string (or null if the user presses x), so no need to do a fancy check here
+    const isValid = !!str;
+    setLocationCityValid(isValid)
+    setLocationCityErrMsg(isValid ? "" : 'Street address should be more than 1 character long');
+  }
+
+  const isLocationStreetValid = (str) => {
+    console.log("isLocationStreetValid", {str}, {locationFull});
+    str = str.trim();
+    if (!str || str.length < 2) {
+      setLocationStreetErrMsg(
+        /[^A-Za-z0-9 ]/g.test(str) ?
+        "Location shouldn't include symbols" :
+        'Street address should be more than 1 character '
+      );
+      setLocationStreetValid(false);
+    } else {
+      setLocationStreetErrMsg('');
+      setLocationStreetValid(true);
+    }
+  }
+
   const isPhoneNumberValid = (str) => {
     if (!/^[0-9]*$/.test(str)) {
       setPhoneNumberErrMsg('digits only');
@@ -197,10 +243,6 @@ export default function ProfileForm({ onCloseModal }) {
   // }, []);
 
 
-  useEffect(() => {
-    console.log({locationCity});
-  }, [locationCity]);
-
   const updateProfile = async () => {
     if (user) {
       const docRef = doc(db, 'users', user.uid);
@@ -230,21 +272,29 @@ export default function ProfileForm({ onCloseModal }) {
         helperText={lastNameErrMsg ? lastNameErrMsg : ''}
         error={!lastNameValid}
       />
-      <TextField
+      {/* <TextField
         onChange={(e) => locationInputHandler(e)}
         label='Location'
         helperText={locationErrMsg}
         error={!LocationValid}
-      />
+      /> */}
       <Autocomplete
         options={cities}
         renderInput={
           params =>
             <TextField {...params}
               label="City"
+              helperText={locationCityErrMsg ? locationCityErrMsg : ''}
+              error={!locationCityValid}
             />
         }
         onChange={(e, newValue) => locationCityInputHandler(e, newValue)}
+      />
+      <TextField
+        onChange={(e) => locationStreetInputHandler(e)}
+        label='Street address'
+        helperText={locationStreetErrMsg}
+        error={!locationStreetValid}
       />
       <TextField
         className='form__phone'
@@ -328,7 +378,8 @@ export default function ProfileForm({ onCloseModal }) {
               !lastNameErrMsg &&
               isMinAge &&
               phoneNumberValid &&
-              LocationValid
+              locationCityValid &&
+              locationStreetValid
             )
           }>
           save
