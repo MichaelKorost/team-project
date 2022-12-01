@@ -103,7 +103,6 @@ function HospitalMap({ setHospitalName }) {
           <Marker position={destination}>
             <Popup>{destinationName}</Popup>
           </Marker>
-          {/* </MapContainer> : <div>{loadingText}</div>} */}
         </MapContainer>
       ) : (
         <div>{<LoadingHeart />}</div>
