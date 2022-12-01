@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
+
 import './ProfilePage.css';
 import { Button, Typography } from '@mui/material';
 import Navbar from '../Navbar/Navbar';
@@ -6,33 +8,14 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import ProfileEditModal from '../Modals/ProfileEditModal/ProfileEditModal';
 import { AppointmentContext } from '../../contexts/AppointmentContext';
 import DonateDetailsModal from '../Modals/DonateDetailsModal/DonateDetailsModal';
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  onSnapshot,
-  updateDoc,
-} from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db, storage } from '../../firebase/firebaseConfig';
 import { AuthContext } from '../../AuthContext';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { updateProfile } from 'firebase/auth';
 
 // TODO: view appointment details, userInfo.appointment
 const ProfilePage = () => {
-  const {
-    dateString,
-    setDateString,
-    timeString,
-    setTimeString,
-    isConfirmed,
-    setIsConfirmed,
-    confirmedDate,
-    setConfirmedDate,
-    isEditOpen,
-    setIsEditOpen,
-  } = useContext(AppointmentContext);
+  const { isEditOpen, setIsEditOpen } = useContext(AppointmentContext);
 
   const { user } = useContext(AuthContext);
 
