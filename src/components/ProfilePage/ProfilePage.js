@@ -211,7 +211,6 @@ const ProfilePage = () => {
             </Button>
           </div>
         </section>
-        <LoadingHeart />
       </div>
       <ProfileEditModal
         onOpenModal={openEditModal}
