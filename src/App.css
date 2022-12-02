@@ -3,8 +3,7 @@
 html {
   min-height: 100vh;
   background-color: #f1f2f6;
-  /* background-image: url('./images/heart.svg'); */
-  background-size: 200px 200px;
+  width: 100vw;
   background-repeat: no-repeat;
   background-position: center;
 }
