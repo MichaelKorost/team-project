@@ -1,19 +1,14 @@
 .login-page {
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.3),
-      rgba(255, 255, 255, 0.3)
-    ),
-    url("/src/images/login-wallpaper.jpg");
+  background: url("/src/images/Web-Header-Background.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  backdrop-filter: blur(6px);
   margin: 0;
   padding: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   height: 100vh;
   overflow: hidden;
-  color: #2691d9;
+  color: #fd3a4a;
 }
 
 .login {
@@ -32,8 +27,9 @@
   align-items: center;
   background: #fff;
   border-radius: 15px;
-  opacity: 0.8;
+  opacity: 0.9;
   transition: all 0.2s ease;
+  box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
 }
 
 .animate {
@@ -48,12 +44,12 @@
   font-size: 62px;
   width: 100%;
   text-align: center;
-  border-bottom: 1px solid #2691d9;
+  border-bottom: 1px solid #fd3a4a;
 }
 
 .login__form-title {
   display: block;
-  color: #2691d9;
+  color: #fd3a4a;
   margin: 0;
   padding: 15px 0 0 0;
 }
@@ -98,14 +94,14 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: #2691d9;
+  background: #fd3a4a;
   transition: 0.5s;
 }
 
 .form__txt_field input:focus ~ label,
 .form__txt_field input:valid ~ label {
   top: -5px;
-  color: #2691d9;
+  color: #fd3a4a;
 }
 .form__txt_field input:focus ~ span::before,
 .form__txt_field input:valid ~ span::before {
@@ -126,7 +122,7 @@ input[type="submit"] {
   height: 50px;
   border-radius: 20px;
   border: 1px solid;
-  background: #2691d9;
+  background: #fd3a4a;
   color: #e9f4fb;
   font-weight: 700;
   font-size: 18px;
@@ -134,7 +130,7 @@ input[type="submit"] {
   outline: none;
 }
 input[type="submit"]:hover {
-  border-color: #2691d9;
+  border-color: #fd3a4a;
   transition: 0.5s;
 }
 
@@ -157,7 +153,7 @@ input[type="submit"]:disabled:hover {
 }
 
 .singuplogin_link a {
-  color: #2691d9;
+  color: #fd3a4a;
   text-decoration: none;
 }
 .singuplogin_link a:hover {
