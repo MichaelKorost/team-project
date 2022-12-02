@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { AuthContext } from '../../AuthContext';
-import { useContext } from 'react';
-import { Navigate } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../../firebase/firebaseConfig';
+import React, { useEffect, useState } from "react";
+import { AuthContext } from "../../AuthContext";
+import { useContext } from "react";
+import { Navigate } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
 
 function RequireProfile({ children }) {
   const [userInfo, setUserInfo] = useState({});
@@ -12,10 +12,9 @@ function RequireProfile({ children }) {
 
   useEffect(() => {
     return async () => {
-      const docRef = doc(db, 'users', user.uid);
+      const docRef = doc(db, "users", user.uid);
       const docUser = await getDoc(docRef);
       const data = docUser.data();
-      console.log(data);
       setUserInfo(data);
       setIsLoading(false);
     };
@@ -26,7 +25,7 @@ function RequireProfile({ children }) {
   ) : userInfo.bloodType ? (
     children
   ) : (
-    <Navigate to='/' />
+    <Navigate to="/" />
   );
 }
 

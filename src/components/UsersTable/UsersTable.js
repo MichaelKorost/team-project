@@ -1,6 +1,5 @@
 import "./UsersTable.css";
 import { DataGrid } from "@mui/x-data-grid";
-import { Avatar } from "@mui/material";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
@@ -35,8 +34,6 @@ const UsersTable = () => {
       unsub();
     };
   }, []);
-
-  //   console.log(data);
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
@@ -74,7 +71,7 @@ const UsersTable = () => {
       field: "bloodType",
       headerName: "BloodType",
       sortable: true,
-      width: 160,
+      width: 100,
       type: "string",
     },
   ];

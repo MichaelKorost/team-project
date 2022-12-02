@@ -1,17 +1,17 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 
-import './ProfilePage.css';
-import { Button, Typography } from '@mui/material';
-import Navbar from '../Navbar/Navbar';
-import { useContext, useEffect, useState } from 'react';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import ProfileEditModal from '../Modals/ProfileEditModal/ProfileEditModal';
-import { AppointmentContext } from '../../contexts/AppointmentContext';
-import DonateDetailsModal from '../Modals/DonateDetailsModal/DonateDetailsModal';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { db, storage } from '../../firebase/firebaseConfig';
-import { AuthContext } from '../../AuthContext';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import "./ProfilePage.css";
+import { Button, Typography } from "@mui/material";
+import Navbar from "../Navbar/Navbar";
+import { useContext, useEffect, useState } from "react";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import ProfileEditModal from "../Modals/ProfileEditModal/ProfileEditModal";
+import { AppointmentContext } from "../../contexts/AppointmentContext";
+import DonateDetailsModal from "../Modals/DonateDetailsModal/DonateDetailsModal";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db, storage } from "../../firebase/firebaseConfig";
+import { AuthContext } from "../../AuthContext";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 // TODO: view appointment details, userInfo.appointment
 const ProfilePage = () => {
@@ -19,7 +19,7 @@ const ProfilePage = () => {
 
   const { user } = useContext(AuthContext);
 
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState("");
   // const [isEditOpen, setIsEditOpen] = useState(false); //moving to ctx because of navbar
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   // uploading img
@@ -29,11 +29,9 @@ const ProfilePage = () => {
 
   useEffect(() => {
     return async () => {
-      const docRef = doc(db, 'users', user.uid);
+      const docRef = doc(db, "users", user.uid);
       const docUser = await getDoc(docRef);
-      console.log(docUser.data(), docUser.id);
       setUserInfo(docUser.data());
-      console.log(userInfo);
     };
   }, [isEditOpen]);
 
@@ -63,32 +61,30 @@ const ProfilePage = () => {
   useEffect(() => {
     const updateProfile = async (downloadURL) => {
       if (user) {
-        const docRef = doc(db, 'users', user.uid);
+        const docRef = doc(db, "users", user.uid);
         await updateDoc(docRef, { photoURL: downloadURL });
         setUserInfo({ ...userInfo, photoURL: downloadURL });
-        console.log(docRef);
       }
     };
 
     const uploadFile = () => {
       const name = new Date().getTime() + file.name; //used to avoid same name
       const storageRef = ref(storage, file.name); // where to upload
-      console.log(name);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on(
-        'state_changed',
+        "state_changed",
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           setPercentage(progress);
-          console.log('Upload is ' + progress + '% done');
+          console.log("Upload is " + progress + "% done");
           switch (snapshot.state) {
-            case 'paused':
-              console.log('Upload is paused');
+            case "paused":
+              console.log("Upload is paused");
               break;
-            case 'running':
-              console.log('Upload is running');
+            case "running":
+              console.log("Upload is running");
               break;
           }
         },
@@ -109,28 +105,29 @@ const ProfilePage = () => {
   return (
     <>
       <Navbar />
-      <div className='profile-page-page'>
-        <section className='left-pane'>
-          <div className='profile-image-container'>
+      <div className="profile-page-page">
+        <section className="left-pane">
+          <div className="profile-image-container">
             <img
-              className='profile__image'
+              className="profile__image"
               src={
                 userInfo.photoURL
                   ? /*URL.createObjectURL(file)*/ userInfo.photoURL
-                  : 'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg'
+                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
               }
-              alt='profile'
+              alt="profile"
             />
             <Button
-              variant='contained'
-              component='label'
-              className='profile__image-button'>
+              variant="contained"
+              component="label"
+              className="profile__image-button"
+            >
               <CameraAltIcon />
               Upload
               <input
                 hidden
-                accept='image/*'
-                type='file'
+                accept="image/*"
+                type="file"
                 onChange={(e) => setFile(e.target.files[0])}
               />
             </Button>
@@ -138,56 +135,58 @@ const ProfilePage = () => {
           <Button
             disabled={!userInfo.appointment}
             onClick={openDetailsModal}
-            variant='contained'
-            className='profile__appointment-button'
-            style={{ margin: 'auto' }}>
+            variant="contained"
+            className="profile__appointment-button"
+            style={{ margin: "auto" }}
+          >
             View nearest appointment details
           </Button>
         </section>
-        <section className='right-pane'>
-          <div className='profile-info'>
-            <div className='profile-info-box'>
-              <div className='profile-info-snippet'>
-                <label className='profile-info__category'>First Name: </label>
-                <p className='profile-info__output'>
-                  {userInfo?.firstName || ''}
+        <section className="right-pane">
+          <div className="profile-info">
+            <div className="profile-info-box">
+              <div className="profile-info-snippet">
+                <label className="profile-info__category">First Name: </label>
+                <p className="profile-info__output">
+                  {userInfo?.firstName || ""}
                 </p>
               </div>
-              <div className='profile-info-snippet'>
-                <label className='profile-info__category'>Last Name: </label>
-                <p className='profile-info__output'>
-                  {userInfo?.lastName || ''}
+              <div className="profile-info-snippet">
+                <label className="profile-info__category">Last Name: </label>
+                <p className="profile-info__output">
+                  {userInfo?.lastName || ""}
                 </p>
               </div>
-              <div className='profile-info-snippet'>
-                <label className='profile-info__category'>Date of birth:</label>
-                <p className='profile-info__output'>{userInfo?.dob || ''}</p>
+              <div className="profile-info-snippet">
+                <label className="profile-info__category">Date of birth:</label>
+                <p className="profile-info__output">{userInfo?.dob || ""}</p>
               </div>
-              <div className='profile-info-snippet'>
-                <label className='profile-info__category'>Phone number: </label>
-                <p className='profile-info__output'>{userInfo?.phoneNumber}</p>
+              <div className="profile-info-snippet">
+                <label className="profile-info__category">Phone number: </label>
+                <p className="profile-info__output">{userInfo?.phoneNumber}</p>
               </div>
-              <div className='profile-info-snippet'>
-                <label className='profile-info__category'>Blood Type: </label>
-                <p className='profile-info__output'>
-                  {userInfo?.bloodType || ''}
+              <div className="profile-info-snippet">
+                <label className="profile-info__category">Blood Type: </label>
+                <p className="profile-info__output">
+                  {userInfo?.bloodType || ""}
                 </p>
               </div>
-              <div className='profile-info-snippet'>
-                <label className='profile-info__category'>Location: </label>
-                <p className='profile-info__output'>
-                  {userInfo?.location || ''}
+              <div className="profile-info-snippet">
+                <label className="profile-info__category">Location: </label>
+                <p className="profile-info__output">
+                  {userInfo?.location || ""}
                 </p>
               </div>
-              <div className='profile-info-snippet'>
-                <label className='profile-info__category'>HMO:</label>
-                <p className='profile-info__output'>{userInfo?.hmo || ''}</p>
+              <div className="profile-info-snippet">
+                <label className="profile-info__category">HMO:</label>
+                <p className="profile-info__output">{userInfo?.hmo || ""}</p>
               </div>
             </div>
             <Button
-              variant='contained'
+              variant="contained"
               onClick={openEditModal}
-              className='profile__edit-btn'>
+              className="profile__edit-btn"
+            >
               Edit
             </Button>
           </div>
