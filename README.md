@@ -17,3 +17,7 @@ start the development server
 ```
 npm start
 ```
+
+# Sources
+
+* http://en.netzah.org/ - List of cities (there was no available API in english that provided all every city)
