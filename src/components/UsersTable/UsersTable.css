@@ -1,0 +1,11 @@
+.cellWidthImg {
+  display: flex;
+  align-items: center;
+}
+.cellWidthImg img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+}

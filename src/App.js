@@ -10,6 +10,7 @@ import RequireAuth from "./components/RequireAuth/RequireAuth";
 import LoggedInWrapper from "./components/LoggedWrapper/LoggedWrapper";
 import LoadingPage from "./components/LoadingPage/LoadingPage";
 import RequireProfile from "./components/RequireAuth/requireProfile";
+import Users from "./components/Users/Users";
 
 function App() {
   return (
@@ -42,14 +43,26 @@ function App() {
             </RequireAuth>
           }
         />
-        <Route
-          path="/admin"
-          element={
-            <RequireAuth>
-              <Dashboard />
-            </RequireAuth>
-          }
-        />
+        <Route path="/admin">
+          <Route
+            index
+            element={
+              <RequireAuth>
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
+
+          <Route
+            path="/admin/users"
+            element={
+              <RequireAuth>
+                <Users />
+              </RequireAuth>
+            }
+          />
+        </Route>
+
         <Route path="*" element={<PageNotFound />} />
         {/* <Route path='*' element={<LoadingPage />} /> */}
       </Routes>
