@@ -67,19 +67,16 @@ function ResponsiveAppBar() {
 
   const donateHandler = () => {
     if (userInfo.bloodType) {
-      console.log("navigating");
       navigate("/donate");
       return;
     }
     onOpenModal();
-    console.log("opening modal");
   };
 
   useEffect(() => {
     return async () => {
       const docRef = doc(db, "users", user.uid);
       const docUser = await getDoc(docRef);
-      console.log(docUser.data());
       setUserInfo(docUser.data());
     };
   }, [isEditOpen]);

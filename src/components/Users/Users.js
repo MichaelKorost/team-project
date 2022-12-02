@@ -3,7 +3,6 @@ import { Box } from "@mui/system";
 import "./Users.css";
 import DashboardSidebar from "../DashboardSidebar/DashboardSidebar";
 import UsersTable from "../UsersTable/UsersTable";
-import { Avatar } from "@mui/material";
 
 const Users = () => {
   return (
