@@ -149,7 +149,7 @@ const DonatePage = () => {
               {userInfo?.appointment || ""}
             </h1>
             <div className="appointment__location">
-              <HospitalMap setHospitalName={setHospitalName} />
+              <HospitalMap />
             </div>
             <div className="appointment__actions">
               <Button variant="contained" onClick={profileButtonHandler}>

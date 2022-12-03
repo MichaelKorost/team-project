@@ -41,6 +41,7 @@ const UsersTable = () => {
       field: "user",
       headerName: "User",
       width: 240,
+      sortable: false,
       renderCell: (params) => {
         return (
           <div className="cellWidthImg">
