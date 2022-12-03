@@ -193,7 +193,7 @@ export default function ProfileForm({ onCloseModal }) {
     [locationFull.street, locationFull.city, "Israel"].join(", ");
 
   const isLocationCityValid = (str) => {
-    console.log("isLocationCityValid", { str }, { locationFull });
+    // console.log("isLocationCityValid", { str }, { locationFull });
     // a fixed list so can only be a string (or null if the user presses x), so no need to do a fancy check here
     const isValid = !!str;
     setLocationCityValid(isValid);
@@ -203,7 +203,7 @@ export default function ProfileForm({ onCloseModal }) {
   };
 
   const isLocationStreetValid = (str) => {
-    console.log("isLocationStreetValid", { str }, { locationFull });
+    // console.log("isLocationStreetValid", { str }, { locationFull });
     str = str.trim();
     if (!str || str.length < 2) {
       setLocationStreetErrMsg(
@@ -256,7 +256,7 @@ export default function ProfileForm({ onCloseModal }) {
     if (user) {
       const docRef = doc(db, "users", user.uid);
       await updateDoc(docRef, { ...userProfile });
-      console.log(docRef);
+      // console.log(docRef);
     }
   };
 

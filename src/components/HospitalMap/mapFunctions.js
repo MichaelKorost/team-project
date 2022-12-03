@@ -18,7 +18,7 @@ export async function fetchUserAddressFromSettings(user) {
         fallbackAddress)
     );
   } catch (err) {
-    console.error("fetchUserAddressFromSettings ::  fetch error", err);
+    // console.error("fetchUserAddressFromSettings ::  fetch error", err);
     return null;
   }
 }

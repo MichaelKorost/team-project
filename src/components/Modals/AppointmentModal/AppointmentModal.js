@@ -29,8 +29,8 @@ export default function AppointmentModal({
 
   const modalAccept = () => {
     onAcceptModal();
-    console.log(timeString);
-    console.log(confirmedDate);
+    // console.log(timeString);
+    // console.log(confirmedDate);
     onUpdateProfile(`${confirmedDate} AT ${timeString}`);
   };
 
