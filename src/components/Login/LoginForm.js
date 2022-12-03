@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
 import LoadingPage from "../LoadingPage/LoadingPage";
+import ErrorModal from "../Modals/ErrorModal/ErrorModal";
 import "./LoginForm.css";
 
 function LoginForm() {
@@ -12,10 +13,19 @@ function LoginForm() {
   const [enteredPassword, setEnteredPassword] = useState("");
   const [enteredPasswordConfirmation, setEnteredPasswordConfirmation] =
     useState("");
-
-  const { register, login, isLoading, setIsLoading } = useContext(AuthContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { register, login, isLoading, setIsLoading, error, setError } =
+    useContext(AuthContext);
 
   const navigate = useNavigate();
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  useEffect(() => {
+    error.length > 1 && setIsModalOpen(true);
+  }, [error]);
 
   useEffect(() => {
     setIsFormValid(
@@ -47,7 +57,7 @@ function LoginForm() {
   // }, []);
 
   const clearInputs = () => {
-    console.log("clearing inputs");
+    // console.log("clearing inputs");
     setEnteredEmail("");
     setEnteredPassword("");
     setEnteredPasswordConfirmation("");
@@ -133,7 +143,6 @@ const onSubmit = async (e) => {
             <span></span>
             <label>E-mail</label>
           </div>
-
           {!registerFormVisible && (
             <div className="form__txt_field">
               <input
@@ -159,6 +168,11 @@ const onSubmit = async (e) => {
                 <span></span>
                 <label>Password</label>
               </div>
+              {enteredPassword.length < 6 && (
+                <p className="register__password">
+                  Password must be at least 6 characters
+                </p>
+              )}
               <div className="form__txt_field">
                 <input
                   type="password"
@@ -169,6 +183,9 @@ const onSubmit = async (e) => {
                 <span></span>
                 <label>Confirm password</label>
               </div>
+              {enteredPassword !== enteredPasswordConfirmation && (
+                <p className="register__password">Repeat password</p>
+              )}
               <input
                 type="submit"
                 value={registerFormVisible ? "Sign Up" : "Login"}
@@ -203,6 +220,11 @@ const onSubmit = async (e) => {
           </div>
         </form>
       </div>
+      <ErrorModal
+        errorMessage={error}
+        isModalOpen={isModalOpen}
+        onCloseModal={closeModal}
+      />
     </div>
   );
 }

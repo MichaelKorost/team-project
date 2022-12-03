@@ -1,11 +1,11 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from "react";
 import {
   MapContainer,
   TileLayer,
   Marker,
   Popup,
   Polyline,
-} from 'react-leaflet';
+} from "react-leaflet";
 import {
   fetchRoute,
   stepsToPoints,
@@ -13,9 +13,9 @@ import {
   fetchNearestHospital,
   calcZoom,
   fetchUserAddressFromSettings,
-} from './mapFunctions';
-import { AuthContext } from '../../AuthContext';
-import LoadingHeart from '../LoadingHeartSvg/LoadingHeart';
+} from "./mapFunctions";
+import { AuthContext } from "../../AuthContext";
+import LoadingHeart from "../LoadingHeartSvg/LoadingHeart";
 
 function HospitalMap({ setHospitalName }) {
   const { user } = useContext(AuthContext);
@@ -28,7 +28,7 @@ function HospitalMap({ setHospitalName }) {
       const destinationAddressData = await fetchNearestHospital(
         originAddressCoor
       );
-      console.log({ user });
+      // console.log({ user });
       const destinationAddressCoor =
         destinationAddressData.geometry.coordinates;
       const coors = [originAddressCoor, destinationAddressCoor].map((coor) =>
@@ -51,26 +51,26 @@ function HospitalMap({ setHospitalName }) {
       setZoom(calcZoom(destinationAddressData.properties.distance));
       if (setHospitalName instanceof Function) {
         const ps = destinationAddressData.properties;
-        setHospitalName((ps.name ? ps.name + ', ' : '') + ps.formatted);
+        setHospitalName((ps.name ? ps.name + ", " : "") + ps.formatted);
       }
       setMapReady(true);
     } catch (err) {
-      console.error('loadMap :: unable to construct map', { err });
+      console.error("loadMap :: unable to construct map", { err });
       setLoadingText(
-        'Error: Could not construct map/locate hospital. Please check again your address settings'
+        "Error: Could not construct map/locate hospital. Please check again your address settings"
       );
     }
   }
 
   const [mapReady, setMapReady] = useState(false);
   const [origin, setOrigin] = useState([0, 0]);
-  const [originName, setOriginName] = useState('Destination');
+  const [originName, setOriginName] = useState("Destination");
   const [destination, setDestination] = useState([0, 0]);
-  const [destinationName, setDestinationName] = useState('Destination');
+  const [destinationName, setDestinationName] = useState("Destination");
   const [center, setCenter] = useState([0, 0]);
   const [zoom, setZoom] = useState(10);
   const [routes, setRoutes] = useState([]);
-  const [loadingText, setLoadingText] = useState('loading map...');
+  const [loadingText, setLoadingText] = useState("loading map...");
 
   useEffect(() => {
     loadMap();
@@ -79,24 +79,26 @@ function HospitalMap({ setHospitalName }) {
   return (
     <section
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '450px',
-        margin: 'auto',
-        backgroundColor: '#ccc',
-      }}>
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "450px",
+        margin: "auto",
+        backgroundColor: "#ccc",
+      }}
+    >
       {mapReady ? (
         <MapContainer
           center={center}
           zoom={zoom}
-          style={{ width: '100%', height: '450px' }}>
+          style={{ width: "100%", height: "450px" }}
+        >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Polyline positions={routes} color='red' />
+          <Polyline positions={routes} color="red" />
           <Marker position={origin}>
             <Popup>{originName}</Popup>
           </Marker>

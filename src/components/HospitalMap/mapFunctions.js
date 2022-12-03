@@ -1,24 +1,24 @@
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../../firebase/firebaseConfig';
-import { geocodeApiKey, placesApiKey } from './tokens';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
+import { geocodeApiKey, placesApiKey } from "./tokens";
 
 export async function fetchUserAddressFromSettings(user) {
   const fallbackAddress =
-    '221b Baker St, London, England' || '10 Downing St, London, England, UK'; // address in case there's no address in the user's data
+    "221b Baker St, London, England" || "10 Downing St, London, England, UK"; // address in case there's no address in the user's data
   try {
-    const docRef = doc(db, 'users', user.uid);
+    const docRef = doc(db, "users", user.uid);
     const docUser = await getDoc(docRef);
     const data = docUser.data();
-    console.log(data);
+    // console.log(data);
     return (
       data?.location ??
       (console.warn(
-        'fetchUserAddressFromSettings :: could not find a defined user address. using fallback location instead'
+        "fetchUserAddressFromSettings :: could not find a defined user address. using fallback location instead"
       ) ||
         fallbackAddress)
     );
   } catch (err) {
-    console.error('fetchUserAddressFromSettings ::  fetch error', err);
+    // console.error("fetchUserAddressFromSettings ::  fetch error", err);
     return null;
   }
 }
@@ -33,7 +33,7 @@ export async function fetchAllMatchingAddresses(address) {
     const json = await req.json();
     return json;
   } catch (err) {
-    console.error('fetchAddress :: fetch error', { address }, err);
+    console.error("fetchAddress :: fetch error", { address }, err);
     return null;
   }
 }
@@ -46,7 +46,7 @@ export async function fetchAddress(address) {
     ];
     return location;
   } catch (err) {
-    console.error('fetchAddress :: fetch error', { address }, err);
+    console.error("fetchAddress :: fetch error", { address }, err);
     return null;
   }
 }
@@ -62,7 +62,7 @@ export async function fetchOriginAndDestination(addresses) {
     return coors;
   } catch (err) {
     console.error(
-      'fetchOriginAndDestination :: fetch error',
+      "fetchOriginAndDestination :: fetch error",
       { addresses },
       err
     );
@@ -79,7 +79,7 @@ export async function fetchNearestHospital(coor) {
     const nearestHospital = findNearestHospital(nearbyHospitals);
     return nearestHospital;
   } catch (err) {
-    console.error('fetchNearestHospital :: fetch error', { coor }, err);
+    console.error("fetchNearestHospital :: fetch error", { coor }, err);
     return null;
   }
 }
@@ -89,13 +89,13 @@ export async function fetchNearbyHospitals(coor) {
   try {
     const req = await fetch(
       `https://api.geoapify.com/v2/places?categories=healthcare.hospital&bias=proximity:${coor.join(
-        ','
+        ","
       )}&limit=20&apiKey=${placesApiKey}`
     );
     const json = await req.json();
     return json.features;
   } catch (err) {
-    console.error('fetchNearbyHospitals :: fetch error', { coor }, err);
+    console.error("fetchNearbyHospitals :: fetch error", { coor }, err);
     return null;
   }
 }
@@ -108,7 +108,7 @@ export function findNearestHospital(hosptalList) {
     );
   } catch (err) {
     console.error(
-      'findNearestHospital :: issue finding the nearest hospital. please check input',
+      "findNearestHospital :: issue finding the nearest hospital. please check input",
       { hosptalList }
     );
   }
@@ -121,16 +121,16 @@ export async function fetchRoute(coors) {
   try {
     const req = await fetch(
       `https://routing.openstreetmap.de/routed-car/route/v1/driving/${coors
-        .map((coor) => coor.join(','))
-        .join(';')}?overview=false&geometries=polyline&steps=true`
+        .map((coor) => coor.join(","))
+        .join(";")}?overview=false&geometries=polyline&steps=true`
     );
     const json = await req.json();
-    if (json.code !== 'Ok') {
-      throw new Error('code status not Ok');
+    if (json.code !== "Ok") {
+      throw new Error("code status not Ok");
     }
     return json.routes[0].legs[0];
   } catch (err) {
-    console.error('fetchRoute :: fetch error', { coors }, err);
+    console.error("fetchRoute :: fetch error", { coors }, err);
     return null;
   }
 }
