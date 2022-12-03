@@ -1,0 +1,112 @@
+.donate-page-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 68.5px);
+  margin: 0 auto;
+  overflow: hidden;
+  width: 100%;
+  gap: 20px;
+}
+
+.donate-left-pane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  width: 400px;
+  min-height: 30vh;
+  height: auto;
+  background-color: white;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  border-radius: 10px;
+}
+
+.donate-right-pane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 0 10px 0 0;
+  width: 700px;
+  min-height: 75vh;
+  height: auto;
+  background-color: white;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  border-radius: 10px;
+}
+
+.donate__title {
+  /* margin: 15px 0 15px; */
+  padding: 8px;
+  font-size: 25px;
+  font-weight: 200;
+  background-color: #ff4756;
+  color: white;
+  border-radius: 4px;
+  max-width: fit-content;
+}
+
+.donate__button {
+  margin: 15px 0 !important;
+  padding: 15px !important;
+}
+
+.donate__confirm-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  padding: 10px;
+}
+
+.donate__confirm-message h1 {
+  margin: 0;
+  color: #ff4756;
+  width: 50%;
+}
+
+.appointment__title {
+  background-color: #ff4756;
+  color: white;
+  padding: 10px 15px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.appointment__location {
+  width: 90%;
+  height: 450px;
+  background-color: beige;
+}
+
+.donate__confirm-button {
+  width: 150px;
+}
+
+@media (max-width: 768px) {
+  .donate-page-page {
+    flex-direction: column;
+    height: auto;
+    padding: 20px 0 50px;
+  }
+
+  .donate-left-pane {
+    margin: 0;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .donate-right-pane {
+    width: 95%;
+    margin: 0;
+  }
+}
+
+.appointment__actions {
+  display: flex;
+  gap: 40px;
+  padding: 10px 0;
+}

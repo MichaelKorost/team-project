@@ -1,0 +1,40 @@
+.dashboard__content {
+  width: calc(100% - 250px);
+  max-height: calc(100vh - 68.5px);
+  overflow: hidden;
+}
+
+.dashboard__widgets {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  max-width: 100%;
+  margin: 40px;
+  height: fit-content;
+}
+
+.dashboard__chart {
+  display: flex;
+  justify-content: center;
+  margin: 0 60px;
+  max-width: 983px;
+  max-height: 450px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+@media (max-width: 899px) {
+  .dashboard__content {
+    width: 100%;
+  }
+  .dashboard__widgets {
+    justify-content: center;
+    margin: 0;
+  }
+  .dashboard__chart {
+    margin: 0 20px;
+    justify-content: center;
+  }
+}

@@ -1,5 +1,13 @@
 @import "./fonts/fonts.css";
 
+html {
+  min-height: 100vh;
+  background-color: #f1f2f6;
+  width: 100vw;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .App {
   font-family: "Roboto", sans-serif;
 }

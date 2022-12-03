@@ -1,0 +1,20 @@
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  gap: 2em;
+}
+
+.edit__actions {
+  display: flex;
+  justify-content: space-around;
+  gap: 5px;
+}
+
+.edit__button {
+  width: 90px;
+}
+
+.form__phone {
+  -webkit-appearance: none;
+}
