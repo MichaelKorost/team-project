@@ -1,4 +1,5 @@
 
+
 # Blood Buddy
 
 ### Description
@@ -10,6 +11,8 @@ BloodBuddy is an App intended for booking an appointment for blood donation at t
 ![Alt Text for image](https://i.imgur.com/YQ7ol3V.jpeg "Login")
 
 ![Alt Text for image](https://i.imgur.com/6vXLJBj.pngg "Profile")
+
+![enter image description here](https://i.imgur.com/TgtdaHZ.png)
 
 ![Alt Text for image](https://i.imgur.com/4X9mkLN.png "Map")
 
@@ -41,6 +44,23 @@ start the development server
 ```
 npm start
 ```
+### Firebase account
+
+- add a Database, storage and Auth to your Firebase project
+- in Database, create a collection called "users"
+- create an "`.env.local`" file inside the root directory
+- in the  "`.env.local`" make sure your credentials are as shown below:
+
+```js
+REACT_APP_FIREBASE_API_KEY=_______________
+REACT_APP_FIREBASE_AUTH_DOMAIN=___________
+REACT_APP_FIREBASE_PROJECT_ID=____________
+REACT_APP_FIREBASE_STORAGEBUCKET=_________
+REACT_APP_FIREBASE_MESSAGIN_SENDER_ID=____
+REACT_APP_FIREBASE_APP_ID=________________
+```
+
+
 ## Technologies
 
 - HTML
