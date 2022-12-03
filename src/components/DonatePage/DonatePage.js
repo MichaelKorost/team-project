@@ -73,9 +73,9 @@ const DonatePage = () => {
     return async () => {
       const docRef = doc(db, "users", user.uid);
       const docUser = await getDoc(docRef);
-      console.log(docUser.data(), docUser.id);
+      // console.log(docUser.data(), docUser.id);
       setUserInfo(docUser.data());
-      console.log(userInfo);
+      // console.log(userInfo);
     };
   }, [userInfo.appointment]);
 
