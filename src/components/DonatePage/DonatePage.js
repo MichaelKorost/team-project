@@ -115,7 +115,9 @@ const DonatePage = () => {
 
   const timeSelect = (timeData) => {
     setTime(timeData);
-    const timeString = timeData.toLocaleString().slice(12, 17);
+    let hours = timeData.getHours();
+    let minutes = timeData.getMinutes();
+    const timeString = `${hours}:${minutes}`;
     setTimeString(timeString);
   };
 
