@@ -20,6 +20,9 @@ BloodBuddy is an App intended for booking an appointment for blood donation at t
 
 ![Alt Text for image](https://i.imgur.com/ruJDKzH.png "Chart")
 
+## Website demo
+- [Link to website on Vercel](https://team-project-iota.vercel.app/)
+
 ## Installation
 
 clone repository
