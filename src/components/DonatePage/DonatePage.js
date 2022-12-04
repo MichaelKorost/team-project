@@ -70,13 +70,14 @@ const DonatePage = () => {
   };
 
   useEffect(() => {
-    return async () => {
+    const get = async () => {
       const docRef = doc(db, "users", user.uid);
       const docUser = await getDoc(docRef);
       // console.log(docUser.data(), docUser.id);
       setUserInfo(docUser.data());
       // console.log(userInfo);
     };
+    get();
   }, [userInfo.appointment]);
 
   const openModal = () => {
