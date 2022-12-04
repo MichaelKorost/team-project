@@ -20,11 +20,12 @@ const DonateDetailsModal = ({ isOpen, onCloseModal }) => {
   const { hospitalName } = useContext(AppointmentContext);
 
   useEffect(() => {
-    return async () => {
+    const get = async () => {
       const docRef = doc(db, "users", user.uid);
       const docUser = await getDoc(docRef);
       setUserInfo(docUser.data());
     };
+    get();
   }, []);
 
   const handleClose = () => {

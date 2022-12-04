@@ -74,11 +74,12 @@ function ResponsiveAppBar() {
   };
 
   useEffect(() => {
-    return async () => {
+    const get = async () => {
       const docRef = doc(db, "users", user.uid);
       const docUser = await getDoc(docRef);
       setUserInfo(docUser.data());
     };
+    get();
   }, [isEditOpen]);
 
   return (

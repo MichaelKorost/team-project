@@ -11,13 +11,14 @@ function RequireProfile({ children }) {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    return async () => {
+    const get = async () => {
       const docRef = doc(db, "users", user.uid);
       const docUser = await getDoc(docRef);
       const data = docUser.data();
       setUserInfo(data);
       setIsLoading(false);
     };
+    get();
   }, []);
 
   return isLoading ? (
