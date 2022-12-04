@@ -28,11 +28,13 @@ const ProfilePage = () => {
   const [userInfo, setUserInfo] = useState({}); //used to get user properties
 
   useEffect(() => {
-    return async () => {
+    const get = async () => {
       const docRef = doc(db, "users", user.uid);
       const docUser = await getDoc(docRef);
       setUserInfo(docUser.data());
     };
+
+    get();
   }, [isEditOpen]);
 
   // edit modal
