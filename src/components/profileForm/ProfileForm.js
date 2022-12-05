@@ -44,10 +44,7 @@ export default function ProfileForm({ onCloseModal }) {
   const [locationStreetErrMsg, setLocationStreetErrMsg] = useState(
     "Street address should be more than 1 character long"
   );
-  const [locationFull, setLocationFull] = useState({
-    city: null,
-    street: null,
-  });
+  const [locationFull, setLocationFull] = useState(null);
   // const [phoneNumberValue, setPhoneNumberValue] = useState('');
   const [phoneNumberValid, setPhoneNumberValid] = useState(false);
   const [phoneNumberErrMsg, setPhoneNumberErrMsg] = useState(
@@ -62,6 +59,14 @@ export default function ProfileForm({ onCloseModal }) {
   const { user } = useContext(AuthContext);
 
   // ----------end states
+
+  useEffect(() => {
+    setLocationFull(`${locationCity}, ${locationStreet}, Israel`);
+  }, [locationCity, locationStreet]);
+
+  useEffect(() => {
+    setUserProfile({ ...userProfile, location: locationFull });
+  }, [locationFull]);
 
   const handleSubmit = (e) => {
     // console.log(userProfile);
@@ -93,16 +98,16 @@ export default function ProfileForm({ onCloseModal }) {
 
   const locationCityInputHandler = (e, newValue) => {
     const value = newValue;
-    setLocationFull({ ...locationFull, city: value });
+    setLocationCity(value);
+    // setLocationFull({ ...locationFull, city: value });
     isLocationCityValid(value);
-    setUserProfile({ ...userProfile, location: evaluateFullLocation() });
   };
 
-  const locationStreetInputHandler = (e) => {
+  const locationStreetInputHandler = function (e) {
     const value = e.target.value;
-    setLocationFull({ ...locationFull, street: value });
+    setLocationStreet(value);
+    // setLocationFull({ ...locationFull, street: value });
     isLocationStreetValid(value);
-    setUserProfile({ ...userProfile, location: evaluateFullLocation() });
   };
 
   const phoneNumberInputHandler = (e) => {
@@ -189,8 +194,9 @@ export default function ProfileForm({ onCloseModal }) {
     return setLocationValid(true);
   };
 
-  const evaluateFullLocation = () =>
-    [locationFull.street, locationFull.city, "Israel"].join(", ");
+  // const evaluateFullLocation = () =>
+  //   console.log(locationFull) ||
+  //   [locationFull.street, locationFull.city, "Israel"].join(", ");
 
   const isLocationCityValid = (str) => {
     // console.log("isLocationCityValid", { str }, { locationFull });
