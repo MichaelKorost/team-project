@@ -23,7 +23,7 @@ const DonateDetailsModal = ({ onOpenModal, onCloseModal, isOpen }) => {
       >
         <DialogTitle id="responsive-dialog-title">{"Edit Profile"}</DialogTitle>
         <DialogContent
-          style={{
+          sx={{
             maxWidth: "500px",
             width: "90%",
             minHeight: "560px",

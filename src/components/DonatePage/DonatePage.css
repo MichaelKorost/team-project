@@ -70,6 +70,7 @@
 
 .appointment__title {
   background-color: #ff4756;
+  border-radius: 10px;
   color: white;
   padding: 10px 15px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,

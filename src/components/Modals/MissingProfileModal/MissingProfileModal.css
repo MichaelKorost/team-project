@@ -1,6 +1,7 @@
 .missingProfile__actions {
   display: flex;
   gap: 40px;
+  justify-content: center;
 }
 
 .missingProfile-actions__link {

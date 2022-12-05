@@ -28,7 +28,7 @@ const DashboardWidget = ({ type }) => {
     case "appointments":
       data = {
         title: "appointments set", //appointments set
-        link: "view all users",
+        link: "see all users",
         query: "users",
         icon: <VolunteerActivismIcon />,
         amount: appointments,
