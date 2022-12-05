@@ -4,7 +4,7 @@
   margin: 10px 0;
 }
 /*  modal  */
-
+/* 
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
   display: flex;
   flex-direction: column;
@@ -15,7 +15,7 @@
   background-color: rgba(255, 255, 255, 0.9) !important;
   backdrop-filter: blur(6px);
   overflow: hidden;
-}
+} */
 
 .modal-details__main {
   display: flex;

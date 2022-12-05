@@ -35,6 +35,7 @@ const DonateDetailsModal = ({ isOpen, onCloseModal }) => {
   return (
     <div>
       <Dialog
+        fullScreen
         open={isOpen}
         fullscreen="true"
         onClose={handleClose}
